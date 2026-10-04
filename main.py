@@ -6,8 +6,9 @@ from pathlib import Path
 
 import streamlit as st
 
-DATA_DIR = Path("json")
-DATA_ROOT = Path("/Users/ashillafryda/Downloads/1-Data")
+BASE_DIR = Path(__file__).resolve().parent
+DATA_DIR = BASE_DIR / "json"
+DATA_ROOT = BASE_DIR
 CLUSTER_ROOT = "/home/cluster-dgx1/ashillafryda/vllm-project"
 
 SOURCES = {
@@ -28,7 +29,7 @@ SOURCES = {
 # Set from the sidebar source selector before any data is loaded.
 INTERNVL_JSONL = QWEN_JSONL = GEMMA_JSONL = IMAGE_ROOT = None
 CLUSTER_PREFIX = ""
-COMMENTS_PATH = Path("/Users/ashillafryda/Downloads/1-Data/qa_comments.json")
+COMMENTS_PATH = BASE_DIR / "qa_comments.json"
 
 st.set_page_config(
     page_title="Model Evaluation: InternVL vs Qwen vs Gemma",
