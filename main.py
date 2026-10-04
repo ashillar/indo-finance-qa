@@ -6,18 +6,28 @@ from pathlib import Path
 
 import streamlit as st
 
-INTERNVL_JSONL = Path(
-    "bi_single_final_internvl.jsonl"
-)
-QWEN_JSONL = Path(
-    "bi_single_qwen25_vl.jsonl"
-)
-GEMMA_JSONL = Path(
-    "bi_single_batch2_gemma3_4b.jsonl"
-)
+DATA_DIR = Path("json")
+DATA_ROOT = Path("/Users/ashillafryda/Downloads/1-Data")
+CLUSTER_ROOT = "/home/cluster-dgx1/ashillafryda/vllm-project"
 
-IMAGE_ROOT = Path("/Users/ashillafryda/Downloads/1-Data/bi_images")
-CLUSTER_PREFIX = "/home/cluster-dgx1/ashillafryda/vllm-project/bi_images"
+SOURCES = {
+    "BI": {
+        "internvl": "bi_single_final_internvl.jsonl",
+        "qwen": "bi_single_qwen25_vl.jsonl",
+        "gemma": "bi_single_batch2_gemma3_4b.jsonl",
+        "images": "bi_images",
+    },
+    "OJK": {
+        "internvl": "ojk_single_final_internvl.jsonl",
+        "qwen": "ojk_single_qwen25_vl.jsonl",
+        "gemma": "ojk_single_final_gemma3_4b.jsonl",
+        "images": "ojk_images",
+    },
+}
+
+# Set from the sidebar source selector before any data is loaded.
+INTERNVL_JSONL = QWEN_JSONL = GEMMA_JSONL = IMAGE_ROOT = None
+CLUSTER_PREFIX = ""
 COMMENTS_PATH = Path("/Users/ashillafryda/Downloads/1-Data/qa_comments.json")
 
 st.set_page_config(
@@ -514,7 +524,7 @@ def render_source_image(image_path, record, zoom_level=100):
                 st.image(str(image_path), width=int(zoom_level * 7))
         st.caption(f"📁 `{image_path}`")
         return
-    st.error("Source image not found under bi_images.")
+    st.error(f"Source image not found under {IMAGE_ROOT.name}.")
     if record:
         st.code(str(record.get("source_path") or record.get("file") or ""))
 
@@ -589,6 +599,19 @@ def render_raw_json_inspector(internvl_record, qwen_record, gemma_record, filena
             st.info("No Qwen record available for this file.")
 
 
+# Source selection (BI / OJK)
+with st.sidebar:
+    source_name = st.radio("Data Source", list(SOURCES), horizontal=True, key="source")
+if st.session_state.get("_last_source") != source_name:
+    st.session_state["_last_source"] = source_name
+    st.session_state.record_index = 0
+_source = SOURCES[source_name]
+INTERNVL_JSONL = DATA_DIR / _source["internvl"]
+QWEN_JSONL = DATA_DIR / _source["qwen"]
+GEMMA_JSONL = DATA_DIR / _source["gemma"]
+IMAGE_ROOT = DATA_ROOT / _source["images"]
+CLUSTER_PREFIX = f"{CLUSTER_ROOT}/{_source['images']}"
+
 # Data loading
 internvl_records = load_jsonl(str(INTERNVL_JSONL))
 qwen_records = load_jsonl(str(QWEN_JSONL))
@@ -610,7 +633,7 @@ if "record_index" not in st.session_state:
 
 with st.sidebar:
     st.header("Navigation & Filter")
-    st.caption("BI Single-Page Model Comparison")
+    st.caption(f"{source_name} Single-Page Model Comparison")
 
     view_filter = st.selectbox(
         "Model Filter",

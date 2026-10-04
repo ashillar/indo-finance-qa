@@ -1,0 +1,502 @@
+[
+ {
+  "model": "InternVL",
+  "file": "SKDU-TRIWULAN-III-2022_p005.png",
+  "idx": 0,
+  "query": "Bagaimana perkembangan inflasi sejak 2017 hingga 2022?",
+  "category": "Chart-Information Extraction",
+  "answer": "Inflasi meningkat dari 3,45% pada tahun 2017 menjadi 3,42% pada tahun 2022.",
+  "answer_type": "pendek",
+  "id": "Q01"
+ },
+ {
+  "model": "InternVL",
+  "file": "SKDU-TRIWULAN-III-2022_p005.png",
+  "idx": 1,
+  "query": "Bagaimana perbedaan antara inflasi SBU dan realisasi investasi di tahun 2022?",
+  "category": "Chart-Numerical Calculation",
+  "answer": "Inflasi SBU pada tahun 2022 adalah 3,42%, sementara realisasi investasi adalah 3,38%.",
+  "answer_type": "panjang",
+  "id": "Q02"
+ },
+ {
+  "model": "InternVL",
+  "file": "SKDU-TRIWULAN-III-2022_p005.png",
+  "idx": 2,
+  "query": "Bagaimana responden memilih sektor keuangan dan real estate pada tahun 2022?",
+  "category": "Text-Text Inference",
+  "answer": "Responden memilih sektor Keuangan 3,68%, dan Real Estate 3,71%.",
+  "answer_type": "pendek",
+  "id": "Q03"
+ },
+ {
+  "model": "InternVL",
+  "file": "KSK-4626_p036.png",
+  "idx": 1,
+  "query": "Bagaimana kontribusi pertumbuhan kredit di ekonomi Indonesia pada tahun 2023 dan 2024?",
+  "category": "Text-Text Inference",
+  "answer": "Kredit konsumsi memimpin kontribusi pertumbuhan kredit di ekonomi Indonesia, dengan kredit komersial dan korporasi meningkat",
+  "answer_type": "panjang",
+  "id": "Q04"
+ },
+ {
+  "model": "InternVL",
+  "file": "KSK-4626_p036.png",
+  "idx": 2,
+  "query": "Bagaimana pertumbuhan kredit di industri penguasaan pada tahun 2023 dan 2024?",
+  "category": "Chart-Information Extraction",
+  "answer": "Kredit konsumsi dan kredit kemerjaan meningkat, kredit investasi meningkat",
+  "answer_type": "pendek",
+  "id": "Q05"
+ },
+ {
+  "model": "InternVL",
+  "file": "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p038.png",
+  "idx": 0,
+  "query": "Bagaimana perubahan nilai Pertumbuhan Dana Pihak Ketiga (DPK) di Kota Palangka Raya selama periode IV-2012?",
+  "category": "Chart-Numerical Calculation",
+  "answer": "Pertumbuhan Dana Pihak Ketiga (DPK) meningkat dari 18,47% menjadi 19,80%",
+  "answer_type": "pendek",
+  "id": "Q06"
+ },
+ {
+  "model": "InternVL",
+  "file": "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p038.png",
+  "idx": 1,
+  "query": "Bagaimana perubahan nilai Pertumbuhan Dana Jenis Tabungan (DPK) di Kota Palangka Raya selama periode IV-2012?",
+  "category": "Chart-Time-Sensitive",
+  "answer": "Pertumbuhan Dana Jenis Tabungan meningkat dari 54,5% menjadi 54,7%",
+  "answer_type": "panjang",
+  "id": "Q07"
+ },
+ {
+  "model": "InternVL",
+  "file": "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p038.png",
+  "idx": 2,
+  "query": "Bagaimana perubahan nilai Pertumbuhan Dana Deposito di Kota Palangka Raya selama periode IV-2012?",
+  "category": "Text-Text Inference",
+  "answer": "Pertumbuhan Dana Deposito meningkat dari 17,8% menjadi 18,0%",
+  "answer_type": "pendek",
+  "id": "Q08"
+ },
+ {
+  "model": "InternVL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20NTT 20Agustus 202018_p053.png",
+  "idx": 0,
+  "query": "Bagaimana peningkatan harga kembang/gembung/barayar/gembo/Aso-Aso di tahun 2018?",
+  "category": "Table-Numerical Calculation",
+  "answer": "Tingkat 6,06% (yoy)",
+  "answer_type": "pendek",
+  "id": "Q09"
+ },
+ {
+  "model": "InternVL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20NTT 20Agustus 202018_p053.png",
+  "idx": 1,
+  "query": "Jelaskan bagaimana pemerintah mengelola harga kembang dan kemudian mengurangi biaya transportasi",
+  "category": "Text-Text Inference",
+  "answer": "Pemerintah meningkatkan harga kembang dan mengurangi biaya transportasi untuk mengurangi biaya pengoperasian dan meningkatkan efisiensi pembayaran.",
+  "answer_type": "panjang",
+  "id": "Q10"
+ },
+ {
+  "model": "InternVL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20NTT 20Agustus 202018_p053.png",
+  "idx": 2,
+  "query": "Bagaimana pengelolaan kemodis dalam kota dan daerah di tahun 2018?",
+  "category": "Chart-Information Extraction",
+  "answer": "Kemodis dalam kota dan daerah meningkat 2,63% (yoy) pada tahun 2018.",
+  "answer_type": "pendek",
+  "id": "Q11"
+ },
+ {
+  "model": "InternVL",
+  "file": "Laporan 20Perekonomian 20Provinsi 20Bali 20November 202020_p049.png",
+  "idx": 0,
+  "query": "Bagaimana realisasi PAD Provinsi Bali pada tahun 2020?",
+  "category": "Text-Text Inference",
+  "answer": "Realisasi PAD Provinsi Bali pada tahun 2020 sebesar Rp 23,32 triliun.",
+  "answer_type": "pendek",
+  "id": "Q12"
+ },
+ {
+  "model": "InternVL",
+  "file": "Laporan 20Perekonomian 20Provinsi 20Bali 20November 202020_p049.png",
+  "idx": 1,
+  "query": "Bagaimana berubah realisasi PAD Provinsi Bali dari tahun 2019 ke tahun 2020?",
+  "category": "Chart-Numerical Calculation",
+  "answer": "Realisasi PAD Provinsi Bali menurun sekitar 5,18%.",
+  "answer_type": "panjang",
+  "id": "Q13"
+ },
+ {
+  "model": "InternVL",
+  "file": "Laporan 20Perekonomian 20Provinsi 20Bali 20November 202020_p049.png",
+  "idx": 2,
+  "query": "Bagaimana berubah realisasi pendapatan asli daerah dan pendapatan pajak daerah dari tahun 2019 ke tahun 2020?",
+  "category": "Chart-Information Extraction",
+  "answer": "Realisasi pendapatan asli daerah menurun 12,68%, sementara pendapatan pajak daerah menurun 6,12%.",
+  "answer_type": "pendek",
+  "id": "Q14"
+ },
+ {
+  "model": "InternVL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20Banten 20Triwulan 20II-2015_p049.png",
+  "idx": 0,
+  "query": "Bagaimana berubah inflasi komponen core dari tahun 2014 ke tahun 2015?",
+  "category": "Text-Text Inference",
+  "answer": "Inflasi komponen core meningkat dari 5,63% pada tahun 2014 menjadi 5,93% pada tahun 2015.",
+  "answer_type": "pendek",
+  "id": "Q15"
+ },
+ {
+  "model": "InternVL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20Banten 20Triwulan 20II-2015_p049.png",
+  "idx": 1,
+  "query": "Bagaimana berubah harga komoditas yang menjadi faktor base effect pada tahun 2015?",
+  "category": "Table-Numerical Calculation",
+  "answer": "Harga komoditas yang menjadi faktor base effect meningkat 8,72 persen pada tahun 2015.",
+  "answer_type": "panjang",
+  "id": "Q16"
+ },
+ {
+  "model": "InternVL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20Banten 20Triwulan 20II-2015_p049.png",
+  "idx": 2,
+  "query": "Bagaimana berubah harga kokomoditas kretek filter?",
+  "category": "Chart-Information Extraction",
+  "answer": "Harga kokomoditas kretek filter meningkat 0,01 pada tahun 2015.",
+  "answer_type": "pendek",
+  "id": "Q17"
+ },
+ {
+  "model": "InternVL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20Bali 20November 202016_p040.png",
+  "idx": 0,
+  "query": "Bagaimana perubahan kinerja kulinerama peningkatan kinerja penumpang di triwulan III 2016?",
+  "category": "Chart-Numerical Calculation",
+  "answer": "Kinerja penumpang meningkat 19,88% pada triwulan III 2016.",
+  "answer_type": "pendek",
+  "id": "Q18"
+ },
+ {
+  "model": "InternVL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20Bali 20November 202016_p040.png",
+  "idx": 1,
+  "query": "Bagaimana perubahan kinerja kargo internasional di triwulan III 2016?",
+  "category": "Chart-Time-Sensitive",
+  "answer": "Kinerja kargo internasional meningkat 8,26% pada triwulan III 2016.",
+  "answer_type": "panjang",
+  "id": "Q19"
+ },
+ {
+  "model": "InternVL",
+  "file": "KEKR 20Provinsi 20Maluku 20Utara 20Mei 202017_p091.png",
+  "idx": 0,
+  "query": "Berapa perkembangan indikator ketenagakerjaan di Maluku Utara pada bulan Februari 2017?",
+  "category": "Text-Text Inference",
+  "answer": "Perkembangan indikator ketenagakerjaan di Maluku Utara menunjukkan pertumbuhan yang baik pada bulan Februari 2017",
+  "answer_type": "pendek",
+  "id": "Q20"
+ },
+ {
+  "model": "InternVL",
+  "file": "KEKR 20Provinsi 20Maluku 20Utara 20Mei 202017_p091.png",
+  "idx": 1,
+  "query": "Bagaimana perkembangan indikator ketenagakerjaan di Maluku Utara melibatkan sektor pertanian, perkebunan, dan perikanan?",
+  "category": "Chart-Numerical Calculation",
+  "answer": "Perkembangan indikator ketenagakerjaan di sektor pertanian, perkebunan, dan perikanan menunjukkan pertumbuhan yang baik, dengan peningkatan dari 4,43% pada Februari 2016 menjadi 4,82% pada Februari 2017",
+  "answer_type": "panjang",
+  "id": "Q21"
+ },
+ {
+  "model": "InternVL",
+  "file": "KEKR 20Provinsi 20Maluku 20Utara 20Mei 202017_p091.png",
+  "idx": 2,
+  "query": "Bagaimana berdasarkan data Tingkat Partisipasi Angkatan Kerja (TPAK) pada bulan Februari 2016 dan 2017?",
+  "category": "Chart-Information Extraction",
+  "answer": "Tingkat Partisipasi Angkatan Kerja (TPAK) menunjukkan pertumbuhan yang baik, dengan meningkat dari 67,83% pada Februari 2016 menjadi 69,48% pada Februari 2017",
+  "answer_type": "pendek",
+  "id": "Q22"
+ },
+ {
+  "model": "InternVL",
+  "file": "Laporan-Perekonomian-Provinsi-Jawa-Tengah-Februari-2026_p073.png",
+  "idx": 0,
+  "query": "Bagaimana kinerja bank Jawa Tengah pada periode IV 2025 relatif dengan periode III 2025?",
+  "category": "Text-Text Inference",
+  "answer": "Kinerja bank Jawa Tengah pada periode IV 2025 relatif menjadi lebih baik dibandingkan periode III 2025, dengan kinerja relatif menjadi 88,54%.",
+  "answer_type": "pendek",
+  "id": "Q23"
+ },
+ {
+  "model": "InternVL",
+  "file": "Laporan-Perekonomian-Provinsi-Jawa-Tengah-Februari-2026_p073.png",
+  "idx": 1,
+  "query": "Bagaimana pertumbuhan kredit perbankan di Jawa Tengah pada periode IV 2025?",
+  "category": "Chart-Numerical Calculation",
+  "answer": "Pertumbuhan kredit perbankan di Jawa Tengah pada periode IV 2025 mencapai Rp384,01 triliun.",
+  "answer_type": "panjang",
+  "id": "Q24"
+ },
+ {
+  "model": "InternVL",
+  "file": "Laporan-Perekonomian-Provinsi-Jawa-Tengah-Februari-2026_p073.png",
+  "idx": 2,
+  "query": "Bagaimana kinerja pertumbuhan DPK perbankan di Jawa Tengah pada periode IV 2025?",
+  "category": "Chart-Information Extraction",
+  "answer": "Kinerja pertumbuhan DPK perbankan di Jawa Tengah pada periode IV 2025 mencapai 70,62%.",
+  "answer_type": "pendek",
+  "id": "Q25"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "SKDU-TRIWULAN-III-2022_p005.png",
+  "idx": 1,
+  "query": "Berapakah tingkat inflasi yang dianggap paling tinggi oleh responden?",
+  "category": "Chart-Information Extraction",
+  "answer": "3,71%",
+  "answer_type": "panjang",
+  "id": "Q26"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "SKDU-TRIWULAN-III-2022_p005.png",
+  "idx": 2,
+  "query": "Berdasarkan sektor mana yang menunjukkan tingkat inflasi yang paling rendah?",
+  "category": "Chart-Numerical Calculation",
+  "answer": "Sektor Listrik, Gas, dan Air Bersih",
+  "answer_type": "pendek",
+  "id": "Q27"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "KSK-4626_p036.png",
+  "idx": 0,
+  "query": "Apakah pertumbuhan kredit perbankan terus ditingkatkan sesuai kapasitas optimalnya?",
+  "category": "Text-Text Inference",
+  "answer": "Ya, pertumbuhan kredit terjadi dan terus ditingkatkan sesuai kapasitas optimalnya.",
+  "answer_type": "pendek",
+  "id": "Q28"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "KSK-4626_p036.png",
+  "idx": 1,
+  "query": "Bagaimana respons makroprudensial terhadap pertumbuhan kredit?",
+  "category": "Table-Numerical Calculation",
+  "answer": "Pertumbuhan kredit meningkat sebesar 9,69% pada 2025, sedikit melambat dari 10,39% pada 2024. Pertumbuhan kredit ditopang oleh segmen korporasi dan kredit investasi.",
+  "answer_type": "panjang",
+  "id": "Q29"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "KSK-4626_p036.png",
+  "idx": 2,
+  "query": "Berapa kontribusi pertumbuhan kredit dari sektor Pertanian?",
+  "category": "Chart-Information Extraction",
+  "answer": "Kontribusi pertumbuhan kredit dari sektor Pertanian sebesar 0,99.",
+  "answer_type": "pendek",
+  "id": "Q30"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p038.png",
+  "idx": 0,
+  "query": "Berapa persentase total aset perbankan di Kota Palangka Raya?",
+  "category": "Text-Text Inference",
+  "answer": "34,0%",
+  "answer_type": "pendek",
+  "id": "Q31"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p038.png",
+  "idx": 1,
+  "query": "Berapakah total aset perbankan di Kota Palangka Raya?",
+  "category": "Chart-Information Extraction",
+  "answer": "Rp 7,16 triliun",
+  "answer_type": "panjang",
+  "id": "Q32"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p038.png",
+  "idx": 2,
+  "query": "Berapa persentase aset perbankan di Kabupaten Kotawaringin Barat?",
+  "category": "Chart-Numerical Calculation",
+  "answer": "9,0%",
+  "answer_type": "pendek",
+  "id": "Q33"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20NTT 20Agustus 202018_p053.png",
+  "idx": 0,
+  "query": "Apakah komoditas yang memiliki tingkat inflasi tertinggi dalam triwulan II 2018?",
+  "category": "Text-Text Inference",
+  "answer": "Kembung/Gembung/Banyar/Gembala/Aso-Aso",
+  "answer_type": "pendek",
+  "id": "Q34"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20NTT 20Agustus 202018_p053.png",
+  "idx": 1,
+  "query": "Berapakah tingkat inflasi komoditas yang memiliki penurunan deflasi tertinggi?",
+  "category": "Chart-Information Extraction",
+  "answer": "Bawang Merah",
+  "answer_type": "panjang",
+  "id": "Q35"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20NTT 20Agustus 202018_p053.png",
+  "idx": 2,
+  "query": "Apakah terdapat inflasi pada komoditas rokok dalam triwulan II 2018?",
+  "category": "Chart-Numerical Calculation",
+  "answer": "Ya",
+  "answer_type": "pendek",
+  "id": "Q36"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Laporan 20Perekonomian 20Provinsi 20Bali 20November 202020_p049.png",
+  "idx": 0,
+  "query": "Apakah penurunan pendapatan APBD Provinsi Bali pada triwulan III tahun 2020 dibandingkan dengan triwulan III tahun 2019?",
+  "category": "Text-Text Inference",
+  "answer": "Terdapat penurunan pendapatan APBD Provinsi Bali pada triwulan III tahun 2020 dibandingkan dengan triwulan III tahun 2019.",
+  "answer_type": "pendek",
+  "id": "Q37"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Laporan 20Perekonomian 20Provinsi 20Bali 20November 202020_p049.png",
+  "idx": 1,
+  "query": "Bagaimana peningkatan realisasi pendapatan daerah pada triwulan III tahun 2020 sebanding dengan realisasi pada triwulan III tahun 2019?",
+  "category": "Chart-Information Extraction",
+  "answer": "Realisasi pendapatan daerah pada triwulan III tahun 2020 sebanding dengan realisasi pada triwulan III tahun 2019, dengan persentase realisasi sebesar 77,24% (2020) dan 77,42% (2019).",
+  "answer_type": "panjang",
+  "id": "Q38"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Laporan 20Perekonomian 20Provinsi 20Bali 20November 202020_p049.png",
+  "idx": 2,
+  "query": "Apakah ada penurunan dalam pendapatan asli daerah pada triwulan III tahun 2020?",
+  "category": "Chart-Numerical Calculation",
+  "answer": "Terdapat penurunan dalam pendapatan asli daerah pada triwulan III tahun 2020, dengan penurunan sebesar 8,72% dibandingkan dengan triwulan III tahun 2019.",
+  "answer_type": "pendek",
+  "id": "Q39"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20Banten 20Triwulan 20II-2015_p049.png",
+  "idx": 0,
+  "query": "Apakah komoditas yang paling banyak mendorong inflasi dalam triwulan II 2015?",
+  "category": "Text-Text Inference",
+  "answer": "Tarif listrik",
+  "answer_type": "pendek",
+  "id": "Q40"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20Banten 20Triwulan 20II-2015_p049.png",
+  "idx": 1,
+  "query": "Berdasarkan anekdot, bagaimana perkembangan jumlah perokok di Indonesia pada tahun 2015?",
+  "category": "Chart-Information Extraction",
+  "answer": "Jumlah perokok di Indonesia relatif stagnan di kisaran 70 juta orang, meskipun tarif cukai rokok naik rata-rata 8,72 persen per Januari 2015.",
+  "answer_type": "panjang",
+  "id": "Q41"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20Banten 20Triwulan 20II-2015_p049.png",
+  "idx": 2,
+  "query": "Apakah komoditas yang paling banyak mengurangi deflasi dalam triwulan II 2015?",
+  "category": "Chart-Numerical Calculation",
+  "answer": "Telepon seluler",
+  "answer_type": "pendek",
+  "id": "Q42"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20Bali 20November 202016_p040.png",
+  "idx": 0,
+  "query": "Peningkatan kunjungan wisatawan ke Provinsi Bali pada triwulan III 2016 sebesar berapa?",
+  "category": "Chart-Time-Sensitive",
+  "answer": "7,64%",
+  "answer_type": "pendek",
+  "id": "Q43"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20Bali 20November 202016_p040.png",
+  "idx": 1,
+  "query": "Berapa jumlah penumpang pesawat udara Bandara Ngurah Rai pada triwulan III 2016?",
+  "category": "Chart-Numerical Calculation",
+  "answer": "40000 ton",
+  "answer_type": "panjang",
+  "id": "Q44"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Kajian 20Ekonomi 20dan 20Keuangan 20Regional 20Provinsi 20Bali 20November 202016_p040.png",
+  "idx": 2,
+  "query": "Peningkatan kinerja transportasi laut pada triwulan III 2016 sebesar berapa?",
+  "category": "Text-Text Inference",
+  "answer": "8,26%",
+  "answer_type": "pendek",
+  "id": "Q45"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "KEKR 20Provinsi 20Maluku 20Utara 20Mei 202017_p091.png",
+  "idx": 0,
+  "query": "Tingkat partisipasi angkatan kerja di Maluku Utara meningkat dari Februari 2016 menjadi Februari 2017.",
+  "category": "Text-Text Inference",
+  "answer": "69,48%",
+  "answer_type": "pendek",
+  "id": "Q46"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "KEKR 20Provinsi 20Maluku 20Utara 20Mei 202017_p091.png",
+  "idx": 1,
+  "query": "Peningkatan tingkat pengangguran terbuka di Maluku Utara terjadi sejak Februari 2016.",
+  "category": "Chart-Numerical Calculation",
+  "answer": "Peningkatan terjadi pada Februari 2016, dari 3,43% menjadi 4,82%.",
+  "answer_type": "panjang",
+  "id": "Q47"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Laporan-Perekonomian-Provinsi-Jawa-Tengah-Februari-2026_p073.png",
+  "idx": 0,
+  "query": "Apakah kinerja perbankan Jawa Tengah pada triwulan IV 2025 menurun?",
+  "category": "Text-Text Inference",
+  "answer": "Menurun",
+  "answer_type": "pendek",
+  "id": "Q48"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Laporan-Perekonomian-Provinsi-Jawa-Tengah-Februari-2026_p073.png",
+  "idx": 1,
+  "query": "Berdasarkan lokasi bank, kinerja perbankan Jawa Tengah pada triwulan IV 2025 terbesar di mana?",
+  "category": "Chart-Numerical Calculation",
+  "answer": "Jawa Barat",
+  "answer_type": "panjang",
+  "id": "Q49"
+ },
+ {
+  "model": "Qwen2.5-VL",
+  "file": "Laporan-Perekonomian-Provinsi-Jawa-Tengah-Februari-2026_p073.png",
+  "idx": 2,
+  "query": "Kinerja perbankan Jawa Tengah pada triwulan IV 2025 berbanding dengan triwulan sebelumnya?",
+  "category": "Chart-Information Extraction",
+  "answer": "Menurun",
+  "answer_type": "pendek",
+  "id": "Q50"
+ }
+]
