@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {"name": "qa-multipage", "runtimeExecutable": "/Library/Frameworks/Python.framework/Versions/3.12/bin/streamlit", "runtimeArgs": ["run", "main_multipage.py", "--server.headless", "true", "--server.port", "8502"], "port": 8502}
+  ]
+}
