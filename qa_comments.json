@@ -1,0 +1,2356 @@
+{
+  "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p013.png": {
+    "internvl": {
+      "3": {
+        "comment": "Hallucination",
+        "query": "Bagaimana pertumbuhan investasi di Kalimantan Tengah selama periode 2005-2012?",
+        "updated_at": "2026-09-25T09:06:21.398652+00:00",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        }
+      },
+      "1": {
+        "query": "Bagaimana kondisi umum ekspor di Kalimantan Tengah selama periode 2005-2012?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T09:05:05.515615+00:00"
+      },
+      "2": {
+        "query": "Bagaimana pertumbuhan ekonomi di Kalimantan Tengah selama periode 2005-2012?",
+        "comment": "Bagaimana pertumbuhan ekonomi di Kalimantan Tengah selama periode triwulan IV-2012?",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:05:46.061994+00:00"
+      }
+    },
+    "gemma": {
+      "1": {
+        "query": "Sektor apa yang mendominasi perekonomian Kalbar pada tahun 2012?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:01:53.627878+00:00"
+      },
+      "2": {
+        "query": "Berapa persentase kontribusi sektor industri pengolahan terhadap PDB Provinsi Kalimantan Timur pada tahun 2012?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:02:52.441112+00:00"
+      },
+      "3": {
+        "query": "Pada tahun berapa konsumsi rumah tangga di Kalimantan Timur mengalami penurunan terbesar dibandingkan tahun 2011?",
+        "comment": "Category: Table-Numerical Calculation. Answer: 43.51",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:04:34.018706+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Apa yang menjadi faktor pendorong melambatnya perekonomian Kalteng di akhir triwulan?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T09:07:08.204633+00:00"
+      },
+      "2": {
+        "query": "Pendapatan Bruto Daerah (PDRB) sektor pertanian pada tahun 2012 berapa?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "Fail"
+        },
+        "updated_at": "2026-09-25T09:07:30.904512+00:00"
+      },
+      "3": {
+        "query": "Pendapatan Bruto Daerah (PDRB) pada tahun 2012 berapa?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:07:43.015652+00:00"
+      }
+    }
+  },
+  "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p016.png": {
+    "internvl": {
+      "1": {
+        "comment": "Hallucination",
+        "query": "Bagaimana kinerja kredit konsumsi lainnya pada tahun 2011?",
+        "updated_at": "2026-09-22T13:07:40.584160+00:00"
+      },
+      "3": {
+        "comment": "should be text inference",
+        "query": "Bagaimana pertumbuhan investasi fisik pada tahun 2011?",
+        "updated_at": "2026-09-24T16:31:37.048096+00:00",
+        "decision": "Unreviewed",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        }
+      },
+      "2": {
+        "query": "Bagaimana kontribusi K/L pada tahun 2011?",
+        "comment": "Text-Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-24T16:30:50.467336+00:00"
+      }
+    },
+    "gemma": {
+      "1": {
+        "query": "answer",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-24T16:29:11.155057+00:00"
+      },
+      "2": {
+        "query": "...",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Fail"
+        },
+        "updated_at": "2026-09-24T16:29:29.910383+00:00"
+      },
+      "3": {
+        "query": "Eternatuve. (i }                         as dges,                } .gurend          eri      erse ...and -an.                        re              s                  entl or}, nter'n                   catoriy-u rna                          .",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-24T16:29:41.321925+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Apakah realisasi APBD di triwulan IV mencapai 89,9%?",
+        "comment": "Table based dan query Apakah realisasi APBD Prov di triwulan IV di tahun 2012 mencapai 89,9%?",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-24T16:33:02.239631+00:00"
+      },
+      "2": {
+        "query": "Berapakah realisasi anggaran K/L yang bersumber dari APBN terterap?",
+        "comment": "Berapakah realisasi anggaran K/L yang bersumber dari APBN terterap pada Q4?",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-24T16:34:09.318203+00:00"
+      },
+      "3": {
+        "query": "Berapa persentase pertumbuhan konsumsi pemerintah?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-24T16:34:34.666010+00:00"
+      }
+    }
+  },
+  "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p017.png": {
+    "internvl": {
+      "1": {
+        "comment": "Ekspor di Kalimantan Tengah selama periode IV-2012 menurun 43,5% dari tahun sebelumnya.",
+        "query": "Bagaimana perubahan ekspor di Kalimantan Tengah selama periode IV-2012?",
+        "updated_at": "2026-09-25T04:10:56.071932+00:00",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        }
+      },
+      "3": {
+        "comment": "False. Harusnya turun",
+        "query": "Bagaimana perubahan kredit investasi di Kalimantan Tengah selama periode IV-2012?",
+        "updated_at": "2026-09-25T04:14:14.883886+00:00",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        }
+      },
+      "2": {
+        "query": "Bagaimana perubahan import di Kalimantan Tengah selama periode IV-2012?",
+        "comment": "Wrong Query and Wrong Answer",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T04:12:51.847779+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "comment": "Pertumbuhan investasi PMTB pada periode III-2011 hingga IV-2012 sebelum 11% sampe ke 14%",
+        "query": "Apakah pertumbuhan investasi PMTB pada periode III-2011 hingga IV-2012?",
+        "updated_at": "2026-09-25T04:17:35.502845+00:00",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "Unreviewed"
+        }
+      },
+      "2": {
+        "comment": "Chart Information Extraction Realisasi pengadaan semen di Kalteng pada periode IV-2012 sebesar 160,000 ton",
+        "query": "Berapa realisasi pengadaan semen di Kalteng pada periode IV-2012?",
+        "updated_at": "2026-09-25T04:20:48.713088+00:00",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        }
+      },
+      "3": {
+        "comment": "Chart-Numerical Calculation\nshould be these Text-Text Inference",
+        "query": "Bagaimana tren pertumbuhan ekspor pada periode IV-2012?",
+        "updated_at": "2026-09-25T04:21:37.528177+00:00",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        }
+      }
+    },
+    "gemma": {
+      "1": {
+        "query": "Berapa persentase investasi PMTB pada tahun 2011?",
+        "comment": "Persentase investasi PMTB pada tahun 2011 adalah 11%.",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T04:04:42.033867+00:00"
+      },
+      "2": {
+        "query": "Bagaimana perkembangan kredit investasi perbankan di Provinsi Kalimantan selama periode 2008-2012?",
+        "comment": "Perkembangan kredit investasi perbankan di Provinsi Kalimantan selama periode 2008-2012 menunjukkan pertumbuh dari 0% sampai 250% dari tahun 2008 ke tahun 2012, dengan fluktuasi signifikan sepanjang periode tersebut.",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T04:06:30.501022+00:00"
+      },
+      "3": {
+        "query": "Berapakah nilai impor barang modal pada tahun 2012 dalam jutaan dolar AS?",
+        "comment": "Berapakah nilai impor barang modal pada tahun 2012 pada kuartal I dalam jutaan dolar AS?",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T04:08:37.403761+00:00"
+      }
+    }
+  },
+  "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p018.png": {
+    "internvl": {
+      "2": {
+        "comment": "Nilai ekspor dan impor menurun",
+        "query": "Bagaimana berubah nilai ekspor dan impor di IV-2012?",
+        "updated_at": "2026-09-25T04:32:38.056598+00:00",
+        "decision": "Unreviewed",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        }
+      },
+      "3": {
+        "comment": "Kemudahan transaksi ekspor menuru di IV-2012yang dulunya 51,1% dibandingkan dengan III.",
+        "query": "Bagaimana banyaknya kemudahan transaksi ekspor batubara di IV-2012 dibandingkan dengan III?",
+        "updated_at": "2026-09-22T17:10:28.608904+00:00"
+      },
+      "1": {
+        "query": "Bagaimana kontribusi ekspor batubara pada kabupaten Kal teng di IV-2012?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T04:30:31.810780+00:00"
+      }
+    },
+    "gemma": {
+      "1": {
+        "query": "Sektor komoditas pertanian dan industri mana saja yang mengalami penurunan pertumbuhan ekspor pada tahun 2012?",
+        "comment": "Komoditas yang mengalami penurunan pertumbuhan ekspor pada tahun 2012 adalah Batubara, crude palm oil (CPO), kayu, dan karet.",
+        "decision": "Unreviewed",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T04:27:05.283004+00:00"
+      },
+      "2": {
+        "query": "Berapakah kontribusi ekspor Kaleng terhadap total transaksi ekspor batubara pada triwulan IV-2012?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T04:28:22.493930+00:00"
+      },
+      "3": {
+        "query": "Menurut data dari Bank Indonesia, berapa persentase volume impor yang meningkat pada periode 2011-2012?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T04:29:52.077951+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Berapa kontribusi Batubara terhadap nilai ekspor Kalteng pada triwulan IV-2012?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T04:33:34.324747+00:00"
+      },
+      "2": {
+        "query": "Berapa persentase penurunan volume ekspor batubara dari triwulan sebelumnya?",
+        "comment": "Berapa penurunan pangsa volume ekspor batubara?",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T04:35:05.178052+00:00"
+      },
+      "3": {
+        "query": "Berapa persentase penurunan nilai ekspor batubara di triwulan IV-2012 dibanding triwulan III?",
+        "comment": "Text to Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T04:35:42.637474+00:00"
+      }
+    }
+  },
+  "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p021.png": {
+    "internvl": {
+      "1": {
+        "query": "Bagaimana kontribusi PDRB pada sektor pertamanya di periode ini?",
+        "comment": "halu, 0,79 itu dari sektor pertanian",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T07:23:57.989308+00:00"
+      },
+      "2": {
+        "query": "Bagaimana pertumbuhan produk di Kalimantan Tengah selama periode ini?",
+        "comment": "Halu. Bagaimana pertumbuhan sektor pertanian di Kalimantan Tengah selama periode Triwulan IV?",
+        "decision": "Unreviewed",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T07:24:26.686532+00:00"
+      },
+      "3": {
+        "query": "Bagaimana pertumbuhan produk di sektor pertamanya di periode ini dibandingkan dengan sektor lainnya?",
+        "comment": "Hallucination",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T07:24:34.590935+00:00"
+      }
+    },
+    "qwen": {
+      "2": {
+        "query": "Berapa persentase penurunan produksi padi di Kalimantan Tengah pada periode IV-2012?",
+        "comment": "Table Category",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T07:26:12.779265+00:00"
+      },
+      "3": {
+        "query": "Berdasarkan tabel, sektor mana yang memiliki kontribusi terbesar terhadap PDRB?",
+        "comment": "Answer: Jasa-Jasa. Table Category",
+        "decision": "Unreviewed",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T07:26:52.630529+00:00"
+      },
+      "1": {
+        "query": "Apakah pertumbuhan sektor pertanian di Kalimantan Tengah pada periode IV-2012?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T07:24:53.045242+00:00"
+      }
+    },
+    "gemma": {
+      "1": {
+        "query": "Sektor apa yang memberikan kontribusi terbesar terhadap pertumbuhan ekonomi makro regional?",
+        "comment": "Sektor apa yang memberikan kontribusi terbesar terhadap pertumbuhan ekonomi makro regional pada periiod III-11? Sektor pertanian memberikan kontribusi terbesar sebesar 2.29 pada periode III-11.",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T07:21:06.172646+00:00"
+      },
+      "2": {
+        "query": "Bagaimana perubahan pertumbuhan sektor industri pengolahan dari periode II-12 ke III-12?",
+        "comment": "Pertumbuhan sektor industri pengolahan menurun dari 1.19 pada periode II-12 menjadi 0.77 pada periode III-12. Category; Table",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T07:22:39.836759+00:00"
+      },
+      "3": {
+        "query": "Berapakah kontribusi sektor perdagangan, hotel, dan restoran pada periode II-12?",
+        "comment": "Kontribusi sektor perdagangan, hotel, dan restoran pada periode II-12 adalah 9.71",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "Fail"
+        },
+        "updated_at": "2026-09-25T07:23:15.916503+00:00"
+      }
+    }
+  },
+  "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p038.png": {
+    "internvl": {
+      "1": {
+        "query": "Bagaimana perubahan nilai Pertumbuhan Dana Pihak Ketiga (DPK) di Kota Palangka Raya selama periode IV-2012?",
+        "comment": "Answer: Pertumbuhan Dana Pihak Ketiga (DPK) meningkat dari 18,47% \nCategory: Text-Text Inference.",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T07:42:54.136979+00:00"
+      },
+      "2": {
+        "query": "Bagaimana perubahan nilai Pertumbuhan Dana Jenis Tabungan (DPK) di Kota Palangka Raya selama periode IV-2012?",
+        "comment": "hallucination.Jawaban terkait komposisi DPK",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T07:58:03.186609+00:00"
+      },
+      "3": {
+        "query": "Bagaimana perubahan nilai Pertumbuhan Dana Deposito di Kota Palangka Raya selama periode IV-2012?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T07:59:59.121550+00:00"
+      }
+    },
+    "qwen": {
+      "2": {
+        "query": "Berapakah total aset perbankan di Kota Palangka Raya?",
+        "comment": "Category: Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T08:04:13.784132+00:00"
+      },
+      "1": {
+        "query": "Berapa persentase total aset perbankan di Kota Palangka Raya?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T08:01:46.407965+00:00"
+      },
+      "3": {
+        "query": "Berapa persentase aset perbankan di Kabupaten Kotawaringin Barat?",
+        "comment": "Category: Text Inference",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T08:04:48.683720+00:00"
+      }
+    },
+    "gemma": {
+      "1": {
+        "query": "Pada tahun 2012, pertumbuhan Dana Pihak Ketiga (DPK) di Kalimantan Timur mencapai berapa persen?",
+        "comment": "18,47% dan Text to Text Reference",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T07:39:05.456596+00:00"
+      },
+      "2": {
+        "query": "Berdasarkan data dalam laporan, sektor mana yang mengalami pertumbuhan DPK tertinggi pada periode Des-12 hingga Des-2012?",
+        "comment": "Berdasarkan data dalam laporan, sektor mana yang mengalami pertumbuhan DPK tertinggi pada periode Des-12? dan Sektor Giro Swasta mengalami pertumbuhan DPK tertinggi sebesar 67,80%.",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T07:40:59.051538+00:00"
+      },
+      "3": {
+        "query": "Apa proporsi giro dalam komposisi DPK pada tahun 2012?",
+        "comment": "Category: Text to Text Reference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T07:41:28.779631+00:00"
+      }
+    }
+  },
+  "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p040.png": {
+    "internvl": {
+      "1": {
+        "query": "Bagaimana perubahan kredit ekonomi selama periode IV-2012?",
+        "comment": "Hallu",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T08:13:30.913013+00:00"
+      },
+      "2": {
+        "query": "Bagaimana perubahan kredit konsumsi selama periode IV-2012?",
+        "comment": "Unclear",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T08:14:22.837590+00:00"
+      },
+      "3": {
+        "query": "Bagaimana kredit modal terhadap kredit investasi selama periode IV-2012?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T08:15:15.555374+00:00"
+      }
+    },
+    "gemma": {
+      "1": {
+        "query": "Sektor mana yang mengalami pertumbuhan kredit konsumsi yang relatif konstan selama periode yang ditinjau?",
+        "comment": "Category: Chart-Time-Sensitive",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T08:06:13.169091+00:00"
+      },
+      "2": {
+        "query": "Apa yang menjadi penyebab utama penurunan pangsa kredit terhadap sektor perdagangan pada tahun 2012?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T08:06:39.866532+00:00"
+      },
+      "3": {
+        "query": "Pada tahun berapa kredit modal kerja mengalami lonjakan pertumbuhan yang sangat tajam pada pertengahan tahun?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T08:12:38.027811+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Apakah tren pertumbuhan kredit pertanian dalam setahun terakhir?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T08:31:48.137101+00:00"
+      },
+      "2": {
+        "query": "Berdasarkan Grafik 3.5, apakah pertumbuhan kredit sektor ekonomi utama (yoy) berada dalam tren yang sama dengan pertumbuhan kredit sektor pertanian?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T08:32:16.030396+00:00"
+      },
+      "3": {
+        "query": "Berapakah total kredit sektor pertanian pada periode 2012?",
+        "comment": "Category: Table-Comparison and Sorting",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T08:32:42.628236+00:00"
+      }
+    }
+  },
+  "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p019.png": {
+    "gemma": {
+      "1": {
+        "query": "Pada tahun 2012, berapa volume ekspor batubara Utama Kalimantan (dalam ribu ton)?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T07:08:30.885838+00:00"
+      },
+      "2": {
+        "query": "Menurut laporan, negara mana yang menjadi tujuan utama ekspor batubara dari Indonesia pada tahun 2011?",
+        "comment": "Negara tujuan utama ekspor batubara dari Indonesia pada tahun 2011 adalah Jepang.",
+        "decision": "Unreviewed",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "Fail"
+        },
+        "updated_at": "2026-09-25T07:12:15.756339+00:00"
+      },
+      "3": {
+        "query": "Berapa persentase total ekspor batubara Kalimatan dari China pada tahun 2011?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T07:13:50.472632+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Bagaimana perubahan ekspor batubara di Kalimantan selama periode 2011 dan 2012?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T07:14:33.832129+00:00"
+      },
+      "2": {
+        "query": "Bagaimana kontribusi ekspor batubara ke China di tahun 2011 dan 2012?",
+        "comment": "Pada tahun 2011, kontribusi ekspor batubara ke China adalah 28,5%, dan pada tahun 2012, menjadi 41,8%. Category: Text to Text",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T07:16:16.099239+00:00"
+      },
+      "3": {
+        "query": "Bagaimana perubahan ekspor batubara dari India, Jepang, dan China pada tahun 2011?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "Pass"
+        },
+        "updated_at": "2026-09-25T07:16:38.231015+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Apakah ada perubahan dalam nilai ekspor batubara di Kalteng sepanjang tahun 2011-2012?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "Pass"
+        },
+        "updated_at": "2026-09-25T07:17:09.248997+00:00"
+      },
+      "2": {
+        "query": "Apakah ada perubahan dalam volume ekspor batubara di Kalteng sepanjang tahun 2011-2012?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T07:17:47.843724+00:00"
+      },
+      "3": {
+        "query": "Apakah ada peningkatan ekspor batubara ke Jepang pada tahun 2012?",
+        "comment": "Category: Text to Text",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T07:18:38.104115+00:00"
+      }
+    }
+  },
+  "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p044.png": {
+    "gemma": {
+      "1": {
+        "query": "Berapa persentase uang kertas yang diminumahkan oleh Bank Indonesia selama periode tahun lalu 2012?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:09:49.223796+00:00"
+      },
+      "2": {
+        "query": "Apa tujuan dari kebijakan 'Clean Money Policy' yang diterapkan oleh Bank Indonesia?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:09:39.405072+00:00"
+      },
+      "3": {
+        "query": "Pada tahun berapa, rasio PTTB terhadap inflow menunjukkan peningkatan signifikan?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:09:32.678428+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Bagaimana perubahan jumlah uang yang masuk ke Bank Indonesia selama periode 2007-2012?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:12:05.313358+00:00"
+      },
+      "2": {
+        "query": "Bagaimana perubahan rasio PTBT terhadap inflow selama periode 2007-2012?",
+        "comment": "",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:12:40.740230+00:00"
+      },
+      "3": {
+        "query": "Bagaimana perubahan jumlah uang yang dijelajahi oleh Bank Indonesia selama periode 2007-2012?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Fail"
+        },
+        "updated_at": "2026-09-25T09:13:15.425691+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Apakah BI melakukan kegiatan Pemberian Tanda Tidak Berharga (PTTB) terhadap uang yang tidak layak edar?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:13:32.541237+00:00"
+      },
+      "2": {
+        "query": "Berapa jumlah uang kartal yang dimusnahkan?",
+        "comment": "Category: Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T09:13:58.689470+00:00"
+      },
+      "3": {
+        "query": "Bagaimana persentase PTTB terhadap inflow?",
+        "comment": "Category: Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T09:14:21.843307+00:00"
+      }
+    }
+  },
+  "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p053.png": {
+    "gemma": {
+      "1": {
+        "query": "Apa indikator utama yang digunakan untuk mengukur kesejahteraan masyarakat Kalimantan Tengah?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:44:13.714670+00:00"
+      },
+      "2": {
+        "query": "Bagaimana tingkat kesejahteraan petani di wilayah pedesaan Kalimatan Tengah berubah dari periode triwulan Desember 2012 hingga November 2013?",
+        "comment": "Halu",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-03T08:46:02.557946+00:00"
+      },
+      "3": {
+        "query": "Pada tahun berapa laporan ini menyebutkan bahwa pendekatan Nilai Tukar Petani (NTP) masih tergolong berada pada area defisit?",
+        "comment": "Category: Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "N/A",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:47:48.077724+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Bagaimana kondisi kesejahteraan masyarakat Kaliemantan Tengah pada bulan Desember 2012?",
+        "comment": "Answer: Kondisi kesejahteraan masyarakat Kaliemantan Tengah pada bulan Desember 2012 lebih rendah sekitar 98,66% dibandingkan bulan sebelumnya.",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:45:25.262529+00:00"
+      },
+      "2": {
+        "query": "Bagaimana perubahan kesejahteraan masyarakat Kaliemantan Tengah selama periode tiga tahun terakhir?",
+        "comment": "Category: Table information",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:46:58.312609+00:00"
+      },
+      "3": {
+        "query": "Bagaimana kesejahteraan masyarakat Kaliemantan Tengah pada bulan Desember 2011?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:48:18.815558+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Apakah tingkat kesejahteraan petani di Kalimantan Tengah pada triwulan IV 2012 lebih rendah dibandingkan triwulan sebelumnya?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:45:19.144439+00:00"
+      },
+      "2": {
+        "query": "Berapakah indeks NTP pada Desember 2012?",
+        "comment": "Category: Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:47:13.569664+00:00"
+      },
+      "3": {
+        "query": "Berapa persentase penurunan jumlah penduduk miskin di Kalimantan Tengah dalam 10 tahun terakhir?",
+        "comment": "Category: Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:48:57.115719+00:00"
+      }
+    }
+  },
+  "Buletin 20- 20Beyond 20Infinity 20Edisi 20Desember 202025_p009.png": {
+    "qwen": {
+      "3": {
+        "query": "Berapa tahun yang ditulis dalam dokumen ini?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-03T08:49:18.436682+00:00"
+      },
+      "2": {
+        "query": "Buku apa yang membahas tentang pertumbuhan ekonomi Indonesia?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-03T08:49:23.233256+00:00"
+      },
+      "1": {
+        "query": "Buku apa yang memberikan inspirasi untuk penulis?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-03T08:49:26.912833+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Mengapa ada banyak kapal di luar pantai?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-03T08:49:27.971433+00:00"
+      },
+      "2": {
+        "query": "Bagaimana industri minyak dan gas menghubungkan dengan ekonomi Indonesia?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-03T08:49:21.799367+00:00"
+      },
+      "3": {
+        "query": "Penggunaan kapal di luar pantai berdasarkan dokumen?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-03T08:49:16.619723+00:00"
+      }
+    },
+    "gemma": {
+      "1": {
+        "query": "Siapa saja tokoh yang menjadi inspirasi dalam pembuatan laporan ini?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-03T08:49:15.462921+00:00"
+      },
+      "2": {
+        "query": "Apa yang menjadi fokus utama dari penulis laporan, sesuai dengan deskripsi di bagian 'Penulis'?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-03T08:49:11.723611+00:00"
+      },
+      "3": {
+        "query": "Periode waktu apa yang tercakup dalam laporan ini?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Unreviewed",
+          "answer_correctness": "Unreviewed",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-03T08:49:08.212181+00:00"
+      }
+    }
+  },
+  "Buletin 20- 20Beyond 20Infinity 20Edisi 20Desember 202025_p021.png": {
+    "gemma": {
+      "1": {
+        "query": "Berapa jumlah penyelenggara ITSK terdafatar pada bulan Juni 2025?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T09:31:11.562319+00:00"
+      },
+      "2": {
+        "query": "Apa saja jenis ITSK yang terdafatar sebagai penyelenggara agregasi jasa keuangan (PAJK) dan sebagai pemerintah kredit alternatif (PKA)?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:31:27.005487+00:00"
+      },
+      "3": {
+        "query": "Berapakah total aset penyelenggara ITSK yang dimiliki pada November 2025?",
+        "comment": "Berapakah total aset penyelenggara PAJK yang dimiliki pada November 2025?",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T09:32:07.669434+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Jumlah penyelenggaran ITSK terdafar pada bulan Juni 2025 berapa?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:32:24.080553+00:00"
+      },
+      "2": {
+        "query": "Bagaimana perkembangan jumlah penyelenggaran ITSK dari bulan Januari hingga Juni 2025?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:32:59.871557+00:00"
+      },
+      "3": {
+        "query": "Bagaimana perkembangan total aset penyelenggaran ITSK terdafar dari bulan Januari hingga November 2025?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T09:33:39.618549+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Bulan mana jumlah penyelenggara ITSK terdaftar mencapai puncak?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-09-25T09:33:51.693715+00:00"
+      },
+      "2": {
+        "query": "Total aset penyelenggara ITSK terdaftar pada bulan Januari 2025 sebesar berapa?",
+        "comment": "Total aset penyelenggara ITSK PKA terdaftar pada bulan Januari 2025 sebesar berapa?",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:34:14.240832+00:00"
+      },
+      "3": {
+        "query": "Jumlah penyelenggara ITSK terdaftar pada bulan Mei 2025 sebanyak berapa?",
+        "comment": "Category: Chart",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Pass"
+        },
+        "updated_at": "2026-09-25T09:34:31.049488+00:00"
+      }
+    }
+  },
+  "Buletin 20- 20Beyond 20Infinity 20Edisi 20Desember 202025_p022.png": {
+    "gemma": {
+      "1": {
+        "query": "Berapa jumlah total emisi penyelongsong ITSK yang terjadi pada bulan Oktober 2025?",
+        "comment": "Category: Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:35:12.443522+00:00"
+      },
+      "2": {
+        "query": "Bagaimana perkembangan total hit PKA dan PAJK dari Januari hingga November 2025? Jelaskan secara rinci.",
+        "comment": "Category: Chart Information",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:35:52.952305+00:00"
+      },
+      "3": {
+        "query": "Sektor mana saja yang mengalami peningkatan signifikan dalam jumlah emisi penyelongsong ITSK pada periode tersebut?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:36:19.687885+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Jumlah jenis kemitraan PKA pada bulan November 2025 berapa?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:36:36.179695+00:00"
+      },
+      "2": {
+        "query": "Perkembangan total hit PAKJ pada bulan April 2025 berapa?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:36:50.814344+00:00"
+      },
+      "3": {
+        "query": "Pertumbuhan total transaksi PAKJ pada bulan Januari 2025 berapa?",
+        "comment": "Category:  Chart",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:37:17.297918+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Bulan mana jumlah kemitraan PKA terdaftar paling tinggi?",
+        "comment": "Answer: November",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:37:58.585464+00:00"
+      },
+      "2": {
+        "query": "Jumlah kemitraan PAJK yang terdaftar pada bulan November 2025 meningkat sebanyak berapa persen?",
+        "comment": "Category: Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:38:36.923651+00:00"
+      },
+      "3": {
+        "query": "Total hit PAKA pada bulan November 2025 mencapai berapa?",
+        "comment": "Category: Chart Numeric",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-09-25T09:38:59.058665+00:00"
+      }
+    }
+  },
+  "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p042.png": {
+    "gemma": {
+      "1": {
+        "query": "Berapa persentase total kredit perbankan yang dialokasikan untuk Usaha Mikro, Kecil, dan Menengah (UMKM) pada triwulan IV-2012?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:25:57.639784+00:00"
+      },
+      "2": {
+        "query": "Sebutkan tiga kategori kredit UMKM yang memiliki skema plafon Rp5 miliar dan mengalami pertumbuhan tertinggi antara triwulan II-2011 dan III-2012.",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:27:25.401095+00:00"
+      },
+      "3": {
+        "query": "Berapakah tingkat pertumbuhan kategori kredit Pertanian antara triwulan II-2011 dan IV-2012?",
+        "comment": "Category: Table Numerical \nAnswer: Pertumbuhannya dari 202.343 ke 568.988 adalah sekitar 181,18%.",
+        "decision": "Unreviewed",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-03T08:29:41.189792+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Kapital umum KER pada periode IV-2012 berapa?",
+        "comment": "Query: Berapa Penyaluran kredit dala UMKM pada triwulan IV 20212?",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:30:36.375939+00:00"
+      },
+      "2": {
+        "query": "Bagaimana berubah kredit umum KER dari periode IV-2011 hingga IV-2012?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-03T08:31:01.141162+00:00"
+      },
+      "3": {
+        "query": "Persentase pertumbuhan kredit umum KER hingga IV-2012 berapa?",
+        "comment": "Category: Table Numerical",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:31:46.437122+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Banyaknya kredit yang dikelola oleh UMKM di periode IV-2012 sebesar Rp 3,38 triliun",
+        "comment": "Query: Banyaknya kredit yang dikelola oleh UMKM di periode IV-2012",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:32:18.430582+00:00"
+      },
+      "2": {
+        "query": "Jumlah kredit UMKM pada periode IV-2012 mencapai 3,387 triliun",
+        "comment": "Query: Berapa Jumlah kredit UMKM pada periode IV-2012 ?",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:32:45.545808+00:00"
+      },
+      "3": {
+        "query": "Jumlah kredit modal kerja pada periode IV-2012 mencapai 2,551,372 triliun",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:33:18.479712+00:00"
+      }
+    }
+  },
+  "8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012_p047.png": {
+    "internvl": {
+      "1": {
+        "query": "Bagaimana hasil kontribusi anggaran pemerintah pada tahun 2011 dan 2012?",
+        "comment": "Query:“Berapa besar defisit anggaran APBD Kalimantan Tengah tahun 2012?”\nJawaban: \"Jawaban: Defisit anggaran APBD Kalimantan Tengah tahun 2012 sebesar Rp528,49 miliar.\"",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-03T08:36:29.877568+00:00"
+      },
+      "2": {
+        "query": "Bagaimana berlakulah pengeluaran APBD pada tahun 2011 dan 2012?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:38:18.186192+00:00"
+      },
+      "3": {
+        "query": "Bagaimana berlakulah keuangan daerah pada tahun 2011 dan 2012?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:38:19.416992+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Apakah total APBD Kalimantan Tengah pada Tahun Anggaran (TA) 2012 mencapai Rp11,6 triliun?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:38:49.902415+00:00"
+      },
+      "2": {
+        "query": "Bagaimana kenaikan APBD Kalimantan Tengah dari TA 2011 ke TA 2012?",
+        "comment": "Category: Text-Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:39:22.041118+00:00"
+      },
+      "3": {
+        "query": "Apakah APBD Kalimantan Tengah TA 2012 mencapai total belanja Rp11,6 triliun?",
+        "comment": "Category: Text-Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T08:39:48.704962+00:00"
+      }
+    }
+  },
+  "Buletin 20- 20Beyond 20Infinity 20Edisi 20Desember 202025_p023.png": {
+    "gemma": {
+      "1": {
+        "query": "Berapa jumlah penyandang Pemegang Pajak (PPJK) terdaftar di Provinsi Papua Barat pada bulan November 2025?",
+        "comment": "Query: Berapa jumlah penyandang Pemegang Pajak (PPJK) terdaftar di Provinsi Papua Selatan pada bulan November 2025?",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:07:03.599496+00:00"
+      },
+      "2": {
+        "query": "Berdasarkan data laporan E-Reporting OJK 2025, provinsi mana saja yang memiliki jumlah PPJK terdaftar lebih dari 3 juta?",
+        "comment": "Query: Berdasarkan data laporan E-Reporting OJK 2025, provinsi mana saja yang memiliki jumlah PPJK terdaftar terbanyak?\nCategory: ChartInformation",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:09:42.730154+00:00"
+      },
+      "3": {
+        "query": "Apa saja sektor yang memiliki kontribusi terbesar terhadap jumlah total PPJK terdaftar menurut data laporan?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:12:05.549185+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Bagaimana jumlah pengguna di DKI Jakarta?",
+        "comment": "Category: Chart",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:08:04.396463+00:00"
+      },
+      "2": {
+        "query": "Bagaimana berbagi jumlah pengguna antara DKI Jakarta dan Jawa Barat?",
+        "comment": "Category: Chart-Information Extraction",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "N/A",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:10:23.009212+00:00"
+      },
+      "3": {
+        "query": "Bagaimana jumlah pengguna di Banten?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:12:28.065424+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Banyaknya pengguna PAJK terdaftar di provinsi apa yang memiliki jumlah pengguna tertinggi?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:08:26.557307+00:00"
+      },
+      "2": {
+        "query": "Seberapa banyak pengguna PAJK terdaftar di Jawa Tengah berbanding dengan Jawa Timur?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:10:42.397515+00:00"
+      },
+      "3": {
+        "query": "Berapa persentase pengguna PAJK terdaftar di DKI Jakarta?",
+        "comment": "Category: Chart-Information Extraction",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Pass"
+        },
+        "updated_at": "2026-10-03T09:13:01.487170+00:00"
+      }
+    }
+  },
+  "Buletin 20- 20Beyond 20Infinity 20Edisi 20Desember 202025_p024.png": {
+    "gemma": {
+      "1": {
+        "query": "Berapa jumlah tenaga kerja penyelenggara ITSK pada bulan November 2025?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:31:57.912980+00:00"
+      },
+      "2": {
+        "query": "Sebutkan tiga perusahaan yang termasuk dalam kategori Pedagang Aset Keuangan Digital (PAKD) berdasarkan daftar yang diberikan.",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Unreviewed",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:41:04.262776+00:00"
+      },
+      "3": {
+        "query": "Berapa total jumlah tenaga kerja penyelenggara PAJK pada periode November 2025?",
+        "comment": "Category: Chart-Information Extraction",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:42:02.275955+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Jumlah tenaga kerja PKA dan PJAK terhadap ITSK pada bulan November 2025 berapa?",
+        "comment": "Chart-Information Extraction",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:40:21.045259+00:00"
+      },
+      "2": {
+        "query": "Banyak aset kripto yang terdaftar di Indonesia pada periode November 2025 berapa?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:41:25.629363+00:00"
+      },
+      "3": {
+        "query": "Tanggal pendaftaran terakhir dari aset kripto Bitwre ada pada bulan November 2025?",
+        "comment": "Query: Tanggal pendaftaran terakhir dari aset kripto Ajaib Kripto ada pada bulan November 2025?",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:43:11.243470+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Banyaknya tenaga kerja penyelelengara ITSK yang terdaftar pada periode November 2025?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:40:41.299977+00:00"
+      },
+      "2": {
+        "query": "Jumlah tenaga kerja penyelelengara ITSK jenis PJK pada periode November 2025?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:41:42.273910+00:00"
+      },
+      "3": {
+        "query": "Total pedagang aset keuangan digital (PAKD) pada periode Desember 2025?",
+        "comment": "Category: Text",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:43:32.589271+00:00"
+      }
+    }
+  },
+  "Buletin 20- 20Beyond 20Infinity 20Edisi 20Desember 202025_p025.png": {
+    "gemma": {
+      "1": {
+        "query": "Apa nama dua institusi yang terlibat dalam penetapan Daftar Aset Kripto?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:43:56.323056+00:00"
+      },
+      "2": {
+        "query": "Berapa jumlah aset kripto yang diperdagangkan pada bulan November 2023, berdasarkan data transaksi aset kripto?",
+        "comment": "Query: Berapa jumlah aset kripto yang diperdagangkan pada bulan November 2025, berdasarkan data transaksi aset kripto?\nCategory: Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:46:00.877801+00:00"
+      },
+      "3": {
+        "query": "Bagaimana perkembangan nilai transaksi aset kripto Indonesia selama bulan tahun 2023?",
+        "comment": "Query: Bagaimana perkembangan nilai transaksi aset kripto Indonesia selama bulan tahun 2025?",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:50:38.592436+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Tanggal pembuatan daftar aset kripto pada 2 bulan terakhir 2025?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "N/A",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:44:42.560238+00:00"
+      },
+      "2": {
+        "query": "Jumlah aset kripto pada bulan November 2025?",
+        "comment": "Jawaban: Jumlah aset kripto pada bulan November 2025 adalah 449,5282 Trilun (Ytd)\nCategory: Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:49:22.538622+00:00"
+      },
+      "3": {
+        "query": "Perubahan aset kripto pada bulan November 2025?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:51:11.337699+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Berapa jumlah DAK yang diperdagangkan pada bulan November 2025?",
+        "comment": "Category: Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:45:22.667083+00:00"
+      },
+      "2": {
+        "query": "Berapakah jumlah DAK yang diperdagangkan pada bulan Agustus 2025?",
+        "comment": "Category: Chart Information",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:49:56.177010+00:00"
+      },
+      "3": {
+        "query": "Berapakah nilai transaksi资产 kripto pada bulan Oktober 2025?",
+        "comment": "Query: Berapakah nilai transaksi kripto pada bulan Oktober 2025?",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "N/A",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:51:56.714928+00:00"
+      }
+    }
+  },
+  "Buletin 20- 20Beyond 20Infinity 20Edisi 20Desember 202025_p034.png": {
+    "gemma": {
+      "1": {
+        "query": "Apa fokus utama dari ekonomi syariah Indonesia menurut dokumen?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "N/A",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:53:39.525827+00:00"
+      },
+      "2": {
+        "query": "Berapa persentase jumlah fintech syariah yang berada di luar Indonesia menurut data yang disajikan?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:55:29.782005+00:00"
+      },
+      "3": {
+        "query": "Pada tahun berapa OIK mencatat pertumbuhan total aset keuangan industri keuangan syariah Indonesia?",
+        "comment": "Answer: OIK mencatat pertumbuhan total aset keuangan industri keuangan syariah Indonesia pada tahun 2025.",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "N/A",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:56:46.562493+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Bagaimana peringkat syariah Indonesia dijadwalkan?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:53:54.016285+00:00"
+      },
+      "2": {
+        "query": "Bagaimana ekosistem fintech syariah terbait Indonesia",
+        "comment": "Category: Table Information",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:55:19.504651+00:00"
+      },
+      "3": {
+        "query": "Bagaimana pertumbuhan fintech syariah di Indonesia?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:57:04.357997+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Apakah Indonesia masuk dalam peringkat Top 3 Global Islamic Economy 2024?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:54:28.539161+00:00"
+      },
+      "2": {
+        "query": "Berapa jumlah investasi halal tertinggi yang ditempati Indonesia?",
+        "comment": "Category: text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:55:56.983222+00:00"
+      },
+      "3": {
+        "query": "Peningkatan ekosistem fintech syariah di Indonesia sebesar berapa?",
+        "comment": "Category: Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:57:37.095908+00:00"
+      }
+    }
+  },
+  "KEKR 20Provinsi 20Maluku 20Utara 20Mei 202017_p034.png": {
+    "gemma": {
+      "1": {
+        "query": "Sektor apa yang menunjukkan pertumbuhan negatif paling signifikan antara tahun 2012 dan 2016?",
+        "comment": "Answer: Pertambangan dan Penggalian\nCategory: Table Information",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T09:59:15.356543+00:00"
+      },
+      "2": {
+        "query": "Berapa persentase perubahan pertumbuhan sektor Pertanian, Kehutanan, dan Perikanan dari tahun 2012 ke 2016?",
+        "comment": "Answer: Penurunan sebesar 4,27% dari 6,47%.",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T10:02:01.341141+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Bagaimana pertumbuhan ekonomi di Provinsi Maluku Utara selama periode 2012-2016?",
+        "comment": "Pertumbuhan ekonomi di Provinsi Maluku Utara selama periode 2012-2016 meningkatkan produksi sektor pertanian, khususnya industri pengolahan, dan pengadaan listrik dan gas.\nCategory: Table Infromation",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T10:00:46.382407+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Apakah sektor pertanian yang menjadi sektor utama pembangunan ekonomi di Provinsi Maluku Utara?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-03T10:01:09.422707+00:00"
+      }
+    }
+  },
+  "KEKR 20Provinsi 20Maluku 20Utara 20Mei 202017_p035.png": {
+    "gemma": {
+      "1": {
+        "query": "Wilayah mana yang disebutkan dalam dokumen sebagai memiliki persentase luas laut yang signifikan?",
+        "comment": "Category: Text Inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-04T13:03:03.366437+00:00"
+      },
+      "2": {
+        "query": "Berapakah total produksi tuna, tongkol, dan kakalung pada tahun 2014, menurut dokumen?",
+        "comment": "Category: Table-Numerical Calculation",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-04T13:04:40.722413+00:00"
+      },
+      "3": {
+        "query": "Berapa persen dari potensi perikanan di Maluku Utara yang dimanfaatkan pada tahun 2014?",
+        "comment": "Category: text",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-04T13:07:07.297430+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Bagaimana banyak ton perikanan yang mengalami penurunan di Provinsi Maluku Utara selama periode 2012-2016?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-04T13:03:29.304097+00:00"
+      },
+      "2": {
+        "query": "Bagaimana berbagi potensi perikanan antara ton perikanan terbaik dan ton perikanan terendah di Provinsi Maluku Utara?",
+        "comment": "Halu",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-04T13:06:09.192508+00:00"
+      },
+      "3": {
+        "query": "Bagaimana banyak ton perikanan yang mengalami peningkatan di Provinsi Maluku Utara selama periode 2012-2016?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "Unreviewed"
+        },
+        "updated_at": "2026-10-04T13:07:48.041918+00:00"
+      }
+    },
+    "qwen": {
+      "1": {
+        "query": "Berapa persentase luas laut di Provinsi Maluku Utara?",
+        "comment": "",
+        "decision": "Retain",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-04T13:03:43.002806+00:00"
+      },
+      "2": {
+        "query": "Berapa jumlah kapal perikanan yang berukuran di atas 30 GT?",
+        "comment": "Category: text inference",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-04T13:06:38.160973+00:00"
+      },
+      "3": {
+        "query": "Berapa total produksi ikan pelagis besar tahun 2014?",
+        "comment": "Category; Tect",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Pass",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-04T13:08:28.192840+00:00"
+      }
+    }
+  },
+  "KEKR 20Provinsi 20Maluku 20Utara 20Mei 202017_p048.png": {
+    "gemma": {
+      "1": {
+        "query": "Berapa persentase peningkatan anggaran pendapatan Pemprov Maluku Utara dalam APBD 2017 dibandingkan dengan APBD 2016?",
+        "comment": "Category: Table-Numerical Calculation",
+        "decision": "Revise",
+        "criteria": {
+          "query_clarity": "Pass",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Fail",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-04T13:09:00.536435+00:00"
+      }
+    },
+    "internvl": {
+      "1": {
+        "query": "Bagaimana penurunan pendapatan asli daerah pada APBD 2017?",
+        "comment": "",
+        "decision": "Discard",
+        "criteria": {
+          "query_clarity": "Fail",
+          "answer_correctness": "Fail",
+          "category_appropriateness": "Pass",
+          "multi_page_sources": "N/A"
+        },
+        "updated_at": "2026-10-04T13:09:47.409049+00:00"
+      }
+    }
+  }
+}
