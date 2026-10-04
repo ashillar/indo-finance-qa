@@ -4,6 +4,7 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
+import requests
 import streamlit as st
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -235,7 +236,49 @@ def resolve_image(record, image_index):
     return None
 
 
+def supabase_config():
+    """Return (url, key) from Streamlit secrets, or None to use the local file."""
+    try:
+        cfg = st.secrets["supabase"]
+        return cfg["url"].rstrip("/"), cfg["key"]
+    except Exception:
+        return None
+
+
+def _sb_headers(key, **extra):
+    return {"apikey": key, "Authorization": f"Bearer {key}", **extra}
+
+
+@st.cache_data(ttl=20, show_spinner=False)
+def _load_remote_comments(url, key):
+    comments = {}
+    start, page = 0, 1000
+    while True:
+        resp = requests.get(
+            f"{url}/rest/v1/reviews",
+            params={"select": "filename,model_key,qa_index,data"},
+            headers=_sb_headers(key, Range=f"{start}-{start + page - 1}"),
+            timeout=15,
+        )
+        resp.raise_for_status()
+        rows = resp.json()
+        for row in rows:
+            comments.setdefault(row["filename"], {}).setdefault(
+                row["model_key"], {}
+            )[str(row["qa_index"])] = row["data"]
+        if len(rows) < page:
+            return comments
+        start += page
+
+
 def load_comments():
+    config = supabase_config()
+    if config:
+        try:
+            return _load_remote_comments(*config)
+        except requests.RequestException as exc:
+            st.error(f"Could not load reviews from Supabase: {exc}")
+            return {}
     if not COMMENTS_PATH.exists():
         return {}
     try:
@@ -283,7 +326,51 @@ def file_review_bucket(file_entry):
     return file_entry
 
 
+def save_qa_review_remote(config, filename, model_key, qa_index, payload):
+    url, key = config
+    match = {
+        "filename": f"eq.{filename}",
+        "model_key": f"eq.{model_key}",
+        "qa_index": f"eq.{qa_index}",
+    }
+    resp = requests.get(
+        f"{url}/rest/v1/reviews",
+        params={"select": "data", **match},
+        headers=_sb_headers(key),
+        timeout=15,
+    )
+    resp.raise_for_status()
+    rows = resp.json()
+    existing = rows[0]["data"] if rows and isinstance(rows[0]["data"], dict) else {}
+    existing.update(payload)
+    existing["updated_at"] = datetime.now(timezone.utc).isoformat()
+    resp = requests.post(
+        f"{url}/rest/v1/reviews",
+        params={"on_conflict": "filename,model_key,qa_index"},
+        headers=_sb_headers(
+            key,
+            **{
+                "Content-Type": "application/json",
+                "Prefer": "resolution=merge-duplicates,return=minimal",
+            },
+        ),
+        json={
+            "filename": filename,
+            "model_key": model_key,
+            "qa_index": int(qa_index),
+            "data": existing,
+        },
+        timeout=15,
+    )
+    resp.raise_for_status()
+    _load_remote_comments.clear()
+
+
 def save_qa_review(filename, model_key, qa_index, payload):
+    config = supabase_config()
+    if config:
+        save_qa_review_remote(config, filename, model_key, qa_index, payload)
+        return
     comments = load_comments()
     file_entry = file_review_bucket(comments.get(filename, {}))
     comments[filename] = file_entry
@@ -872,8 +959,8 @@ with st.sidebar:
         st.code(str(GEMMA_JSONL))
         st.caption("Images Root")
         st.code(str(IMAGE_ROOT))
-        st.caption("Comments File")
-        st.code(str(COMMENTS_PATH))
+        st.caption("Reviews stored in")
+        st.code("Supabase" if supabase_config() else str(COMMENTS_PATH))
 
 # Side-by-Side Split or Stacked Layout
 if layout_split.startswith("50 / 50"):
