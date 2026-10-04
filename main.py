@@ -16,13 +16,13 @@ SOURCES = {
         "internvl": "bi_single_final_internvl.jsonl",
         "qwen": "bi_single_qwen25_vl.jsonl",
         "gemma": "bi_single_batch2_gemma3_4b.jsonl",
-        "images": "bi_images",
+        "images": ["bi_images", "bi-single", "bi_single"],
     },
     "OJK": {
         "internvl": "ojk_single_final_internvl.jsonl",
         "qwen": "ojk_single_qwen25_vl.jsonl",
         "gemma": "ojk_single_final_gemma3_4b.jsonl",
-        "images": "ojk_images",
+        "images": ["ojk_images", "ojk-single", "ojk_single"],
     },
 }
 
@@ -610,8 +610,11 @@ _source = SOURCES[source_name]
 INTERNVL_JSONL = DATA_DIR / _source["internvl"]
 QWEN_JSONL = DATA_DIR / _source["qwen"]
 GEMMA_JSONL = DATA_DIR / _source["gemma"]
-IMAGE_ROOT = DATA_ROOT / _source["images"]
-CLUSTER_PREFIX = f"{CLUSTER_ROOT}/{_source['images']}"
+IMAGE_ROOT = next(
+    (DATA_ROOT / name for name in _source["images"] if (DATA_ROOT / name).exists()),
+    DATA_ROOT / _source["images"][0],
+)
+CLUSTER_PREFIX = f"{CLUSTER_ROOT}/{_source['images'][0]}"
 
 # Data loading
 internvl_records = load_jsonl(str(INTERNVL_JSONL))
