@@ -7,13 +7,13 @@ from pathlib import Path
 import streamlit as st
 
 INTERNVL_JSONL = Path(
-    "/Users/ashillafryda/Downloads/3-evalresult/finalqa/bi_single_final_internvl.jsonl"
+    "bi_single_final_internvl.jsonl"
 )
 QWEN_JSONL = Path(
-    "/Users/ashillafryda/Downloads/3-evalresult/finalqa/bi_single_qwen25_vl.jsonl"
+    "bi_single_qwen25_vl.jsonl"
 )
 GEMMA_JSONL = Path(
-    "/Users/ashillafryda/Downloads/3-evalresult/finalqa/bi_single_batch2_gemma3_4b.jsonl"
+    "bi_single_batch2_gemma3_4b.jsonl"
 )
 
 IMAGE_ROOT = Path("/Users/ashillafryda/Downloads/1-Data/bi_images")
