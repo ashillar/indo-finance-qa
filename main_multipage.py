@@ -35,7 +35,7 @@ SOURCES_IMAGES_NAME = ""
 COMMENTS_PATH = BASE_DIR / "qa_comments.json"
 
 st.set_page_config(
-    page_title="Multi-Page: InternVL vs Qwen",
+    page_title="Multi-Page QA Review: InternVL vs Qwen",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -45,137 +45,88 @@ st.markdown(
     """
     <style>
     .block-container {
-        padding-top: 1rem;
+        padding-top: 3rem;
         padding-bottom: 2rem;
-        max-width: 98%;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        max-width: 100%;
     }
     .main-title {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 700;
-        margin-bottom: 0;
         color: #111827;
+        line-height: 1.3;
     }
     .main-subtitle {
         color: #6b7280;
-        font-size: 13px;
-        margin-top: 3px;
-        margin-bottom: 8px;
+        font-size: 12.5px;
+        margin-top: 2px;
+        word-break: break-all;
     }
     .model-banner {
-        border-radius: 10px;
-        padding: 9px 13px;
+        border-radius: 9px;
+        padding: 7px 12px;
         font-weight: 700;
-        font-size: 14px;
-        margin-bottom: 10px;
+        font-size: 13.5px;
+        margin-bottom: 8px;
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
-    .banner-internvl {
-        background: #eff6ff;
-        color: #1d4ed8;
-        border: 1px solid #bfdbfe;
-    }
-    .banner-qwen {
-        background: #f5f3ff;
-        color: #6d28d9;
-        border: 1px solid #ddd6fe;
-    }
-    .banner-gemma {
-        background: #f0fdfa;
-        color: #0f766e;
-        border: 1px solid #99f6e4;
-    }
-    .qa-card {
-        border: 1px solid #e5e7eb;
-        border-radius: 11px;
-        padding: 13px 15px;
-        margin-bottom: 12px;
-        background: white;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-    .qa-number {
-        font-size: 11px;
-        font-weight: 700;
-        color: #4f46e5;
-        text-transform: uppercase;
-        letter-spacing: 0.03em;
-        margin-bottom: 4px;
-    }
+    .banner-internvl { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .banner-qwen { background: #f5f3ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+    .banner-gemma { background: #f0fdfa; color: #0f766e; border: 1px solid #99f6e4; }
     .qa-category {
         display: inline-block;
         font-size: 11px;
         color: #4b5563;
         background: #f3f4f6;
-        padding: 3px 8px;
+        padding: 2px 8px;
         border-radius: 6px;
-        margin-bottom: 8px;
+        margin: 0 6px 0 4px;
     }
     .qa-question {
-        font-size: 13.5px;
+        font-size: 14px;
         line-height: 1.5;
         font-weight: 600;
         color: #111827;
-        margin-bottom: 8px;
+        margin: 6px 0;
     }
     .answer-label {
         font-size: 10px;
         font-weight: 700;
         color: #6b7280;
         letter-spacing: 0.06em;
-        margin-bottom: 4px;
+        margin-bottom: 3px;
     }
     .answer-box {
         display: inline-block;
-        padding: 7px 11px;
+        padding: 6px 10px;
         background: #ecfdf5;
         border: 1px solid #a7f3d0;
         border-radius: 6px;
         color: #047857;
         font-size: 13px;
-        font-weight: 700;
+        font-weight: 600;
         white-space: pre-wrap;
         word-break: break-word;
     }
-    .answer-type {
-        display: inline-block;
-        margin-left: 6px;
-        color: #9ca3af;
-        font-size: 11px;
-    }
+    .answer-type { color: #9ca3af; font-size: 11px; margin-left: 6px; }
     .image-panel-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         font-weight: 700;
-        font-size: 15px;
-        margin-bottom: 8px;
+        font-size: 14px;
+        margin-bottom: 6px;
         color: #1f2937;
     }
-    .record-counter {
-        text-align: center;
-        font-size: 13px;
-        color: #6b7280;
-        padding-top: 6px;
-    }
-    section[data-testid="stSidebar"] {
-        background: #f9fafb;
-    }
-    /* Smooth custom scrollbars for sticky containers */
-    ::-webkit-scrollbar {
-        width: 7px;
-        height: 7px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #d1d5db;
-        border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #9ca3af;
-    }
+    .record-counter { text-align: center; font-size: 13px; color: #6b7280; padding-top: 6px; }
+    section[data-testid="stSidebar"] { background: #f9fafb; }
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
     </style>
     """,
     unsafe_allow_html=True,
@@ -329,6 +280,7 @@ def file_review_bucket(file_entry):
     if (
         "internvl" not in file_entry
         and "qwen" not in file_entry
+        and "gemma" not in file_entry
     ):
         return {}
     return file_entry
@@ -479,6 +431,45 @@ def init_widget(key, default):
         st.session_state[key] = default
 
 
+MODELS = [
+    ("internvl", "InternVL", "banner-internvl"),
+    ("qwen", "Qwen2.5-VL", "banner-qwen"),
+]
+CRITERION_BUTTONS = ["Pass", "Fail", "N/A"]
+DECISIONS = ["Retain", "Revise", "Discard"]
+DECISION_BADGE = {
+    "Retain": ":green[● Retain]",
+    "Revise": ":orange[● Revise]",
+    "Discard": ":red[● Discard]",
+    "Unreviewed": ":gray[○ Unreviewed]",
+}
+
+
+def autosave_review(prefix, filename, model_key, number, query):
+    payload = {
+        "query": query,
+        "comment": str(st.session_state.get(f"comment-{prefix}") or "").strip(),
+        "decision": st.session_state.get(f"decision-{prefix}") or "Unreviewed",
+        "criteria": {
+            field: st.session_state.get(f"crit-{prefix}-{field}") or "Unreviewed"
+            for field, _, _ in CRITERIA
+        },
+    }
+    try:
+        save_qa_review(filename, model_key, number, payload)
+    except Exception as exc:  # network or disk problem: show it instead of failing silently
+        st.session_state["_save_error"] = f"Could not save review: {exc}"
+        return
+    st.session_state.pop("_save_error", None)
+    st.session_state[f"saved-{prefix}"] = datetime.now().strftime("%H:%M:%S")
+
+
+def set_all_pass(prefix, filename, model_key, number, query):
+    for field, _, _ in CRITERIA:
+        st.session_state[f"crit-{prefix}-{field}"] = "Pass"
+    autosave_review(prefix, filename, model_key, number, query)
+
+
 def render_qa_cards(items, filename, model_key, comments):
     if not items:
         st.info("No Q&A parsed for this record.")
@@ -487,7 +478,6 @@ def render_qa_cards(items, filename, model_key, comments):
         if not isinstance(qa, dict):
             continue
         query = str(qa.get("query", ""))
-        question = html.escape(query)
         answer = html.escape(str(qa.get("answer", "")))
         category = html.escape(str(qa.get("category", "Unknown")))
         answer_type = html.escape(str(qa.get("answer_type", "")))
@@ -499,116 +489,83 @@ def render_qa_cards(items, filename, model_key, comments):
         existing = saved_qa_entry(comments, filename, model_key, number)
         saved_criteria = existing.get("criteria") if isinstance(existing.get("criteria"), dict) else {}
         prefix = f"{filename}-{model_key}-{number}"
-
-        st.markdown('<div class="qa-card">', unsafe_allow_html=True)
-        st.markdown(
-            f'<div class="qa-number">Question {number}</div>',
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            f'<div class="qa-category">{category}</div>',
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            f'<div class="qa-question">{question}</div>',
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            '<div class="answer-label">ANSWER</div>',
-            unsafe_allow_html=True,
-        )
-        if answer:
-            st.markdown(
-                f'<span class="answer-box">{answer}</span>',
-                unsafe_allow_html=True,
-            )
-        else:
-            st.caption("No answer in this object.")
-        if answer_type:
-            st.markdown(
-                f'<span class="answer-type">{answer_type}</span>',
-                unsafe_allow_html=True,
-            )
-        st.markdown(
-            f'<div class="answer-label" style="margin-top:8px;">CITED PAGES</div>'
-            f'<span class="answer-type">pages: {html.escape(source_pages_text)}</span>',
-            unsafe_allow_html=True,
-        )
-
-        st.markdown(
-            '<div class="answer-label" style="margin-top:12px;">VERIFICATION CRITERIA</div>',
-            unsafe_allow_html=True,
-        )
-        criterion_values = {}
-        left_crit, right_crit = st.columns(2)
-        for index, (field, label, help_text) in enumerate(CRITERIA):
-            widget_key = f"crit-{prefix}-{field}"
-            saved_value = saved_criteria.get(field, "Unreviewed")
-            if saved_value not in CRITERION_CHOICES:
-                saved_value = "Unreviewed"
-            init_widget(widget_key, saved_value)
-            target = left_crit if index % 2 == 0 else right_crit
-            with target:
-                criterion_values[field] = st.selectbox(
-                    label,
-                    CRITERION_CHOICES,
-                    key=widget_key,
-                    help=help_text,
-                )
+        args = (prefix, filename, model_key, number, query)
 
         decision_key = f"decision-{prefix}"
-        saved_decision = existing.get("decision", "Unreviewed")
-        if saved_decision not in DECISION_CHOICES:
-            saved_decision = "Unreviewed"
-        init_widget(decision_key, saved_decision)
-        decision = st.radio(
-            "Decision",
-            DECISION_CHOICES,
-            key=decision_key,
-            horizontal=True,
-            help="Retain if all criteria are met. Revise for minor issues (unclear query, wrong category). Discard for major errors that cannot be fixed reliably.",
-        )
-
-        st.markdown(
-            '<div class="answer-label" style="margin-top:8px;">COMMENT</div>',
-            unsafe_allow_html=True,
-        )
         comment_key = f"comment-{prefix}"
+        saved_decision = existing.get("decision")
+        init_widget(decision_key, saved_decision if saved_decision in DECISIONS else None)
         init_widget(comment_key, qa_comment(comments, filename, model_key, number))
-        comment_value = st.text_area(
-            "Comment",
-            height=70,
-            key=comment_key,
-            placeholder="Optional notes: what to revise, why it is discarded, etc.",
-            label_visibility="collapsed",
-        )
-        save_col, status_col = st.columns([1, 2])
-        with save_col:
-            saved = st.button(
-                "Save review",
-                key=f"save-{prefix}",
-                use_container_width=True,
+        for field, _, _ in CRITERIA:
+            saved_value = saved_criteria.get(field)
+            init_widget(
+                f"crit-{prefix}-{field}",
+                saved_value if saved_value in CRITERION_BUTTONS else None,
             )
-        with status_col:
-            if saved:
-                save_qa_review(
-                    filename,
-                    model_key,
-                    number,
-                    {
-                        "query": query,
-                        "comment": comment_value.strip(),
-                        "decision": decision,
-                        "criteria": criterion_values,
-                    },
-                )
-                st.success(f"Saved: {decision}")
-            elif existing.get("updated_at"):
-                st.caption(
-                    f"{existing.get('decision', 'Unreviewed')} • {existing['updated_at']}"
-                )
+        current = st.session_state.get(decision_key) or "Unreviewed"
 
-        st.markdown("</div>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown(
+                f"**Q{number}** <span class='qa-category'>{category}</span> {DECISION_BADGE[current]}",
+                unsafe_allow_html=True,
+            )
+            st.markdown(
+                f'<div class="qa-question">{html.escape(query)}</div>',
+                unsafe_allow_html=True,
+            )
+            if answer:
+                type_html = f'<span class="answer-type">{answer_type}</span>' if answer_type else ""
+                st.markdown(
+                    f'<div class="answer-label">ANSWER</div><span class="answer-box">{answer}</span>{type_html}',
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.caption("No answer in this object.")
+            st.markdown(
+                f'<div class="answer-label">CITED PAGES</div><span class="answer-box" style="background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8;">pages: {html.escape(source_pages_text)}</span>',
+                unsafe_allow_html=True,
+            )
+
+            st.segmented_control(
+                "Decision",
+                DECISIONS,
+                key=decision_key,
+                label_visibility="collapsed",
+                on_change=autosave_review,
+                args=args,
+                help="Retain if all criteria are met. Revise for minor issues. Discard for major errors. Click again to clear.",
+            )
+
+            st.button(
+                "✓ Mark all criteria Pass",
+                key=f"allpass-{prefix}",
+                on_click=set_all_pass,
+                args=args,
+            )
+            for field, label, help_text in CRITERIA:
+                label_col, control_col = st.columns([2, 3], vertical_alignment="center")
+                label_col.markdown(f"<span style='font-size:13px'>{label}</span>", unsafe_allow_html=True, help=help_text)
+                with control_col:
+                    st.segmented_control(
+                        label,
+                        CRITERION_BUTTONS,
+                        key=f"crit-{prefix}-{field}",
+                        label_visibility="collapsed",
+                        on_change=autosave_review,
+                        args=args,
+                    )
+            st.text_area(
+                "Comment",
+                height=70,
+                key=comment_key,
+                placeholder="Optional notes: what to revise, why it is discarded, etc.",
+                on_change=autosave_review,
+                args=args,
+            )
+
+            stamp = st.session_state.get(f"saved-{prefix}") or existing.get("updated_at")
+            if stamp:
+                st.caption(f"✓ Saved {str(stamp)[:19].replace('T', ' ')}")
 
 
 def render_source_images(page_images, zoom_level=100):
@@ -618,57 +575,59 @@ def render_source_images(page_images, zoom_level=100):
             if zoom_level == 100:
                 st.image(str(image_path), use_container_width=True)
             else:
-                st.image(str(image_path), width=int(zoom_level * 7))
-            st.caption(f"📁 `{image_path.name}`")
+                st.image(str(image_path), width=int(zoom_level * 8))
         else:
             st.error(f"Image for page {label} not found.")
 
 
-def render_model_section(title, banner_class, record, attempts, filename, model_key, comments):
+def render_model_section(title, banner_class, record, attempts, filename, model_key, comments, reviewed, total):
     st.markdown(
-        f'<div class="model-banner {banner_class}"><span>{html.escape(title)}</span><span>QA: {len(qa_items(record))}</span></div>',
+        f'<div class="model-banner {banner_class}"><span>{html.escape(title)}</span>'
+        f"<span>{reviewed} / {total} reviewed</span></div>",
         unsafe_allow_html=True,
     )
-
     if not record:
         st.warning("No record for this model.")
         return
-
-    cols = st.columns(3)
-    cols[0].metric("Attempts", len(attempts) if attempts else 1)
-    cols[1].metric("Status", status_label(record))
-    cols[2].metric("QA count", len(qa_items(record)))
-
+    st.caption(
+        f"Attempts: {len(attempts) if attempts else 1} · Status: {status_label(record)} · Questions: {len(qa_items(record))}"
+    )
     if record.get("error"):
         st.error(record["error"])
-
-    st.markdown("##### Questions & Answers")
     render_qa_cards(qa_items(record), filename, model_key, comments)
-
-    with st.expander(f"🔍 View {title} Raw JSON", expanded=False):
+    with st.expander(f"🔍 {title} raw JSON", expanded=False):
         st.json(record)
 
 
-def render_raw_json_inspector(internvl_record, qwen_record, filename):
-    st.markdown("### 📋 Raw JSON Inspector")
-    st.caption(f"View and inspect raw JSON outputs for: `{filename}`")
-    tab_inter, tab_qwen = st.tabs(["🔵 InternVL", "🟣 Qwen2.5-VL"])
-    for tab, label, key, record in (
-        (tab_inter, "InternVL", "internvl", internvl_record),
-        (tab_qwen, "Qwen", "qwen", qwen_record),
-    ):
+def render_raw_json_inspector(records, filename):
+    st.caption(f"Raw JSON outputs for `{filename}`")
+    tabs = st.tabs([title for _, title, _ in MODELS])
+    for tab, (model_key, title, _) in zip(tabs, MODELS):
         with tab:
+            record = records.get(model_key)
             if record:
                 st.download_button(
-                    f"Download {label} JSON",
+                    f"Download {title} JSON",
                     data=json.dumps(record, indent=2, ensure_ascii=False),
-                    file_name=f"{key}_{filename}.json",
+                    file_name=f"{model_key}_{filename}.json",
                     mime="application/json",
-                    key=f"dl-{key}-{filename}",
+                    key=f"dl-{model_key}-{filename}",
                 )
                 st.json(record)
             else:
-                st.info(f"No {label} record for this page group.")
+                st.info(f"No {title} record for this file.")
+
+
+def reviewed_count(comments, name, model_key, record):
+    entries = file_review_bucket(comments.get(name, {})).get(model_key, {})
+    if not isinstance(entries, dict):
+        return 0
+    return sum(
+        1
+        for number in range(1, len(qa_items(record)) + 1)
+        if isinstance(entries.get(str(number)), dict)
+        and entries[str(number)].get("decision") in DECISIONS
+    )
 
 
 # Source selection (BI / OJK)
@@ -686,28 +645,33 @@ SOURCES_IMAGES_NAME = _source["images_name"]
 CLUSTER_PREFIX = f"{CLUSTER_ROOT}/{_source['images_name']}"
 
 # Data loading
-internvl_records = load_jsonl(str(INTERNVL_JSONL))
-qwen_records = load_jsonl(str(QWEN_JSONL))
-
+records_by_model = {
+    "internvl": load_jsonl(str(INTERNVL_JSONL)),
+    "qwen": load_jsonl(str(QWEN_JSONL)),
+}
 image_index = index_images(tuple(str(p) for p in IMAGE_ROOTS))
 
-if not internvl_records and not qwen_records:
+if not any(records_by_model.values()):
     st.error("Neither multi-page JSONL file (InternVL, Qwen) could be loaded.")
     st.stop()
 
-internvl_by_file = group_by_file(internvl_records)
-qwen_by_file = group_by_file(qwen_records)
-all_files = sorted(set(internvl_by_file) | set(qwen_by_file))
+by_file = {key: group_by_file(recs) for key, recs in records_by_model.items()}
+all_files = sorted(set().union(*[set(d) for d in by_file.values()]))
 
 if "record_index" not in st.session_state:
     st.session_state.record_index = 0
 
-with st.sidebar:
-    st.header("Navigation & Filter")
-    st.caption(f"{source_name} Multi-Page Model Comparison")
+progress_slot = st.sidebar.container()
 
+with st.sidebar:
+    st.header("Find & Filter")
+    search = st.text_input("Search page group", placeholder="e.g. p014 or Banten")
+    review_filter = st.selectbox(
+        "Review status",
+        ["All reviews", "Unreviewed", "Retain", "Revise", "Discard"],
+    )
     view_filter = st.selectbox(
-        "Model Filter",
+        "Models present",
         [
             "All page groups",
             "In both models",
@@ -717,115 +681,112 @@ with st.sidebar:
             "Missing image",
         ],
     )
-    search = st.text_input("Search page group", placeholder="e.g. p014 or Banten")
 
-    review_filter = st.selectbox(
-        "Review Status",
-        [
-            "All reviews",
-            "Unreviewed",
-            "Retain",
-            "Revise",
-            "Discard",
-        ],
-    )
+    with st.expander("Display settings"):
+        layout_split = st.selectbox(
+            "Pane layout",
+            [
+                "55 / 45 (Image + Q&A)",
+                "50 / 50 (Balanced)",
+                "60 / 40 (Larger image)",
+                "Stacked (Image top)",
+            ],
+            index=0,
+        )
+        sticky_image = st.checkbox(
+            "Keep image in view while scrolling Q&A",
+            value=True,
+        )
+        image_zoom = st.slider(
+            "Image zoom",
+            min_value=60,
+            max_value=160,
+            value=100,
+            step=10,
+            format="%d%%",
+            help="100% fits the panel width. Zoom in to read small table cells; the image panel scrolls.",
+        )
 
-    st.divider()
-    st.subheader("Layout Settings")
-    layout_split = st.selectbox(
-        "Pane Layout",
-        [
-            "50 / 50 (Balanced Side-by-Side)",
-            "45 / 55 (More Models Space)",
-            "60 / 40 (Larger Image)",
-            "Stacked (Image Top, Models Below)",
-        ],
-        index=0,
-        help="Side-by-side lets you inspect the pages and the model questions simultaneously.",
-    )
-    sticky_image = st.checkbox(
-        "Pin Image Panel (Sticky)",
-        value=True,
-        help="Keeps the page images in view as you scroll through questions on the right.",
-    )
-    image_zoom = st.slider(
-        "Image Zoom",
-        min_value=60,
-        max_value=160,
-        value=100,
-        step=10,
-        format="%d%%",
-        help="Zoom in to see small table cells or chart labels clearly.",
-    )
-
-    with st.expander("Verification Criteria"):
+    with st.expander("Verification criteria"):
         st.markdown(
             """
-1. **Query Clarity:** The query should be specific and unambiguous, targeting a particular topic in a document.
-2. **Answer Correctness:** The answer must be factually correct and directly supported by the visual content. No hallucinations.
-3. **Category Appropriateness:** The question should match its assigned category.
-4. **Multi-Page Sources:** The answer should need more than one page, and every cited page (CITED PAGES) must be correct.
+1. **Query Clarity:** specific and unambiguous, targeting a particular topic.
+2. **Answer Correctness:** factually correct and supported by the image. No hallucinations.
+3. **Category Appropriateness:** the question matches its assigned category.
+4. **Multi-Page Sources:** the answer needs more than one page, and every cited page (CITED PAGES) is correct.
 
 **Decision rule:** Retain if all criteria are met. Revise for minor issues. Discard for major errors.
             """
         )
 
-# Inject sticky column CSS when in side-by-side mode and sticky is enabled
-if sticky_image and not layout_split.startswith("Stacked"):
+# Pin the image panel (and let it scroll on its own) next to the scrolling Q&A
+if not layout_split.startswith("Stacked"):
+    sticky_css = (
+        "position: sticky; top: 3.4rem; align-self: flex-start;" if sticky_image else ""
+    )
     st.markdown(
-        """
+        f"""
         <style>
-        div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"]:first-child {
-            position: sticky !important;
-            top: 1rem !important;
-            align-self: flex-start !important;
-            max-height: calc(100vh - 2rem) !important;
-            overflow-y: auto !important;
-        }
+        div[data-testid="stColumn"]:has(.st-key-image-pane) {{ align-self: stretch !important; }}
+        div[data-testid="stLayoutWrapper"]:has(> .st-key-image-pane) {{
+            {sticky_css}
+            width: 100%;
+        }}
+        .st-key-image-pane {{
+            max-height: calc(100vh - 4.6rem);
+            overflow: auto;
+        }}
         </style>
         """,
         unsafe_allow_html=True,
     )
 
-filtered = []
 comments_index = load_comments()
+file_stats = {}
+filtered = []
 for name in all_files:
-    internvl = pick_record(internvl_by_file.get(name, []))
-    qwen = pick_record(qwen_by_file.get(name, []))
-    page_images = resolve_images(internvl or qwen, image_index)
-    internvl_status = status_label(internvl)
-    qwen_status = status_label(qwen)
+    picked = {key: pick_record(by_file[key].get(name, [])) for key, _, _ in MODELS}
+    reviewed = sum(reviewed_count(comments_index, name, key, picked[key]) for key, _, _ in MODELS)
+    total = sum(len(qa_items(picked[key])) for key, _, _ in MODELS)
+    file_stats[name] = (reviewed, total)
 
-    if view_filter == "In both models" and not (internvl and qwen):
+    present = {key for key, rec in picked.items() if rec}
+    if view_filter == "In both models" and len(present) < 2:
         continue
-    if view_filter == "InternVL only" and not (internvl and not qwen):
+    if view_filter == "InternVL only" and present != {"internvl"}:
         continue
-    if view_filter == "Qwen only" and not (qwen and not internvl):
+    if view_filter == "Qwen only" and present != {"qwen"}:
         continue
-    if view_filter == "Has errors" and internvl_status != "error" and qwen_status != "error":
+    if view_filter == "Has errors" and not any(status_label(rec) == "error" for rec in picked.values() if rec):
         continue
-    if view_filter == "Missing image" and all(path for _, path in page_images):
+    if view_filter == "Missing image" and all(
+        path for _, path in resolve_images(next((r for r in picked.values() if r), None), image_index)
+    ):
         continue
     if search and search.lower() not in name.lower():
         continue
-    if review_filter != "All reviews":
+    if review_filter == "Unreviewed":
+        if total > 0 and reviewed >= total:
+            continue
+    elif review_filter != "All reviews":
         file_reviews = file_review_bucket(comments_index.get(name, {}))
-        decisions = []
-        for model_key in ("internvl", "qwen"):
-            model_entry = file_reviews.get(model_key, {})
-            if not isinstance(model_entry, dict):
-                continue
-            for entry in model_entry.values():
-                if isinstance(entry, dict):
-                    decisions.append(entry.get("decision", "Unreviewed"))
-        if review_filter == "Unreviewed":
-            total_qa = len(qa_items(internvl)) + len(qa_items(qwen))
-            reviewed = sum(1 for d in decisions if d and d != "Unreviewed")
-            if reviewed >= total_qa and total_qa > 0:
-                continue
-        elif review_filter not in decisions:
+        decisions = [
+            entry.get("decision")
+            for model_entry in file_reviews.values()
+            if isinstance(model_entry, dict)
+            for entry in model_entry.values()
+            if isinstance(entry, dict)
+        ]
+        if review_filter not in decisions:
             continue
     filtered.append(name)
+
+grand_reviewed = sum(r for r, _ in file_stats.values())
+grand_total = sum(t for _, t in file_stats.values())
+with progress_slot:
+    st.markdown(f"**{source_name} review progress**")
+    st.progress(grand_reviewed / grand_total if grand_total else 0.0)
+    st.caption(f"{grand_reviewed} / {grand_total} questions reviewed")
 
 if not filtered:
     st.warning("No records match the current filters.")
@@ -846,57 +807,28 @@ def next_record():
         st.session_state.record_index += 1
 
 
+def next_unreviewed():
+    for position in range(st.session_state.record_index + 1, len(filtered)):
+        reviewed, total = file_stats[filtered[position]]
+        if reviewed < total:
+            st.session_state.record_index = position
+            return
+    st.toast("No unreviewed files after this one.")
+
+
 index = st.session_state.record_index
 filename = filtered[index]
-
-internvl_attempts = internvl_by_file.get(filename, [])
-qwen_attempts = qwen_by_file.get(filename, [])
-internvl_record = pick_record(internvl_attempts)
-qwen_record = pick_record(qwen_attempts)
-page_images = resolve_images(internvl_record or qwen_record, image_index)
+attempts = {key: by_file[key].get(filename, []) for key, _, _ in MODELS}
+picked = {key: pick_record(attempts[key]) for key, _, _ in MODELS}
+page_images = resolve_images(next((rec for rec in picked.values() if rec), None), image_index)
 all_images_found = bool(page_images) and all(path for _, path in page_images)
 group_pages = ", ".join(str(label) for label, _ in page_images)
-
-# Header & Top Navigation Toolbar
-top_meta, top_prev_col, top_next_col = st.columns([3, 1, 1])
-with top_meta:
-    st.markdown(
-        f"""
-        <div class="main-title">{source_name} Multi-Page: InternVL vs Qwen2.5-VL</div>
-        <div class="main-subtitle">
-            📄 <b>{html.escape(filename)}</b>
-            &nbsp;•&nbsp;
-            Pages <b>{html.escape(group_pages)}</b>
-            &nbsp;•&nbsp;
-            Record <b>{index + 1}</b> of <b>{len(filtered)}</b>
-            &nbsp;•&nbsp;
-            🔵 InternVL: {len(internvl_records)} &nbsp;|&nbsp; 🟣 Qwen: {len(qwen_records)}
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-with top_prev_col:
-    st.button(
-        "← Prev Group",
-        key="top_prev",
-        on_click=previous_record,
-        disabled=index == 0,
-        use_container_width=True,
-    )
-with top_next_col:
-    st.button(
-        "Next Group →",
-        key="top_next",
-        on_click=next_record,
-        disabled=index >= len(filtered) - 1,
-        use_container_width=True,
-    )
+file_reviewed, file_total = file_stats[filename]
 
 with st.sidebar:
     st.divider()
-    st.metric("Current Record", f"{index + 1} / {len(filtered)}")
     jump = st.number_input(
-        "Jump to record",
+        f"Jump to record (1–{len(filtered)})",
         min_value=1,
         max_value=len(filtered),
         value=index + 1,
@@ -905,109 +837,113 @@ with st.sidebar:
     if jump != index + 1:
         st.session_state.record_index = jump - 1
         st.rerun()
-
-    st.divider()
-    st.caption(f"Active: {filename}")
-    if all_images_found:
-        st.success(f"All {len(page_images)} page images found")
-    else:
-        st.error("Some page images are missing")
-    with st.expander("JSONL & Data Paths"):
-        st.caption("InternVL JSONL")
-        st.code(str(INTERNVL_JSONL))
-        st.caption("Qwen2.5-VL JSONL")
-        st.code(str(QWEN_JSONL))
-        st.caption("Images Root")
+    with st.expander("Data paths"):
+        for key, title, _ in MODELS:
+            st.caption(f"{title} JSONL")
+            st.code(str({"internvl": INTERNVL_JSONL, "qwen": QWEN_JSONL}[key]))
+        st.caption("Images root")
         st.code(str(IMAGE_ROOT))
         st.caption("Reviews stored in")
         st.code("Supabase" if supabase_config() else str(COMMENTS_PATH))
 
-# Side-by-Side Split or Stacked Layout
-if layout_split.startswith("50 / 50"):
+# Toolbar
+bar_title, bar_prev, bar_next, bar_unrev = st.columns([5, 1, 1, 1.4], vertical_alignment="center")
+with bar_title:
+    st.markdown(
+        f"""
+        <div class="main-title">{html.escape(source_name)} · Group {index + 1} of {len(filtered)}
+            &nbsp;<span style="font-size:13px;color:#6b7280;font-weight:600;">· {file_reviewed}/{file_total} reviewed</span></div>
+        <div class="main-subtitle">📄 {html.escape(filename)} &nbsp;·&nbsp; pages {html.escape(group_pages)}</div>
+        """,
+        unsafe_allow_html=True,
+    )
+with bar_prev:
+    st.button("← Prev", key="top_prev", on_click=previous_record, disabled=index == 0, use_container_width=True)
+with bar_next:
+    st.button("Next →", key="top_next", on_click=next_record, disabled=index >= len(filtered) - 1, use_container_width=True)
+with bar_unrev:
+    st.button("Next unreviewed ⏭", key="top_unrev", on_click=next_unreviewed, use_container_width=True)
+
+if st.session_state.get("_save_error"):
+    st.error(st.session_state["_save_error"])
+
+# Image | Q&A
+if layout_split.startswith("55"):
+    left_pane, right_pane = st.columns([55, 45], gap="medium")
+elif layout_split.startswith("50"):
     left_pane, right_pane = st.columns([1, 1], gap="medium")
-elif layout_split.startswith("45 / 55"):
-    left_pane, right_pane = st.columns([45, 55], gap="medium")
-elif layout_split.startswith("60 / 40"):
+elif layout_split.startswith("60"):
     left_pane, right_pane = st.columns([60, 40], gap="medium")
 else:
     left_pane = st.container()
     right_pane = st.container()
 
 with left_pane:
-    st.markdown(
-        f"""
-        <div class="image-panel-header">
-            <span>🖼️ Source Pages ({len(page_images)})</span>
-            <span style="font-size:12px; font-weight:600; color:{'#16a34a' if all_images_found else '#dc2626'};">
-                {'● Images Available' if all_images_found else '○ Image Missing'}
-            </span>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    render_source_images(page_images, zoom_level=image_zoom)
+    with st.container(key="image-pane"):
+        st.markdown(
+            f"""
+            <div class="image-panel-header">
+                <span>🖼️ Source pages ({len(page_images)})</span>
+                <span style="font-size:12px; font-weight:600; color:{'#16a34a' if all_images_found else '#dc2626'};">
+                    {'● Images found' if all_images_found else '○ Image missing'}
+                </span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        render_source_images(page_images, zoom_level=image_zoom)
 
+VIEW_OPTIONS = [title for _, title, _ in MODELS] + ["Compare all", "Raw JSON"]
 with right_pane:
-    view_mode = st.pills(
-        "View Mode",
-        [
-            "🌟 Both Models",
-            "🔵 InternVL",
-            "🟣 Qwen2.5-VL",
-            "📋 Raw JSON Inspector",
-        ],
-        default="🌟 Both Models",
-        label_visibility="collapsed",
+    default_view = next(
+        (title for key, title, _ in MODELS if picked[key]),
+        VIEW_OPTIONS[0],
     )
+    view_mode = st.segmented_control(
+        "View",
+        VIEW_OPTIONS,
+        default=default_view,
+        key="view_mode",
+        label_visibility="collapsed",
+    ) or default_view
 
     comments = load_comments()
 
-    if view_mode == "🌟 Both Models":
-        col_internvl, col_qwen = st.columns(2, gap="small")
-        with col_internvl:
-            render_model_section(
-                "InternVL", "banner-internvl", internvl_record,
-                internvl_attempts, filename, "internvl", comments,
-            )
-        with col_qwen:
-            render_model_section(
-                "Qwen2.5-VL", "banner-qwen", qwen_record,
-                qwen_attempts, filename, "qwen", comments,
-            )
-    elif view_mode == "🔵 InternVL":
+    def section(model_key, title, banner):
+        record = picked[model_key]
         render_model_section(
-            "InternVL", "banner-internvl", internvl_record,
-            internvl_attempts, filename, "internvl", comments,
+            title,
+            banner,
+            record,
+            attempts[model_key],
+            filename,
+            model_key,
+            comments,
+            reviewed_count(comments, filename, model_key, record),
+            len(qa_items(record)),
         )
-    elif view_mode == "🟣 Qwen2.5-VL":
-        render_model_section(
-            "Qwen2.5-VL", "banner-qwen", qwen_record,
-            qwen_attempts, filename, "qwen", comments,
-        )
-    elif view_mode == "📋 Raw JSON Inspector":
-        render_raw_json_inspector(internvl_record, qwen_record, filename)
 
-# Bottom Navigation
+    if view_mode == "Compare all":
+        for column, (model_key, title, banner) in zip(st.columns(2, gap="small"), MODELS):
+            with column:
+                section(model_key, title, banner)
+    elif view_mode == "Raw JSON":
+        render_raw_json_inspector(picked, filename)
+    else:
+        model_key, title, banner = next(m for m in MODELS if m[1] == view_mode)
+        section(model_key, title, banner)
+
+# Bottom navigation
 st.divider()
-bottom_left, bottom_center, bottom_right = st.columns([1, 2, 1])
+bottom_left, bottom_center, bottom_unrev, bottom_right = st.columns([1, 2, 1.4, 1])
 with bottom_left:
-    st.button(
-        "← Previous",
-        key="bottom_prev",
-        on_click=previous_record,
-        disabled=index == 0,
-        use_container_width=True,
-    )
+    st.button("← Previous", key="bottom_prev", on_click=previous_record, disabled=index == 0, use_container_width=True)
 with bottom_center:
     st.markdown(
-        f'<div class="record-counter">Record <b>{index + 1}</b> of <b>{len(filtered)}</b> ({html.escape(filename)})</div>',
+        f'<div class="record-counter">Record <b>{index + 1}</b> of <b>{len(filtered)}</b></div>',
         unsafe_allow_html=True,
     )
+with bottom_unrev:
+    st.button("Next unreviewed ⏭", key="bottom_unrev", on_click=next_unreviewed, use_container_width=True)
 with bottom_right:
-    st.button(
-        "Next →",
-        key="bottom_next",
-        on_click=next_record,
-        disabled=index >= len(filtered) - 1,
-        use_container_width=True,
-    )
+    st.button("Next →", key="bottom_next", on_click=next_record, disabled=index >= len(filtered) - 1, use_container_width=True)
