@@ -1,0 +1,4 @@
+﻿model_pair,images,avg_all_pairs_cosine,avg_best_match_cosine,avg_one_to_one_cosine,best_p25,best_median,best_p75,pct_queries_with_similar_match,pct_images_with_any_match,corr_with_judge
+internvl vs qwen,168,0.667,0.736,0.697,0.654,0.748,0.821,32.5,50.6,
+internvl vs gemma,169,0.626,0.716,0.658,0.64,0.719,0.807,27.6,42.6,
+qwen vs gemma,168,0.642,0.745,0.687,0.657,0.747,0.844,36.3,61.9,
