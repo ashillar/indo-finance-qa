@@ -63,6 +63,20 @@ BANNED_PHRASES = (
     "menurut data di atas",
 )
 MIN_QUOTE_CHARS = 8
+MIN_QUERY_WORDS = 8
+MIN_CONTENT_WORDS = 4
+MAX_WORD_OVERLAP = 0.75
+# Filler that appears in nearly every question; two questions that differ
+# only in these words are not duplicates, and a question made of little else
+# is too generic.
+STOPWORDS = frozenset(
+    """bagaimana berapa apa apakah mengapa kenapa siapa kapan dimana mana
+    yang dan di ke dari pada dalam dengan untuk atau serta oleh adalah ini
+    itu tersebut dibandingkan membandingkan perbandingan bandingkan
+    berdasarkan menurut periode triwulan tahun sebesar sebesar secara
+    terhadap antara kepada sebagai akan telah sudah lebih dapat bisa
+    jelaskan sebutkan hitung tentukan""".split()
+)
 MAX_QUOTE_SIMILARITY = 0.9
 
 INSTRUCTIONS = """
@@ -70,8 +84,8 @@ Anda diberikan {n_pages} gambar halaman dari SATU dokumen yang sama. Setiap
 gambar diberi label [Halaman N]. Nomor halaman yang sah hanya: {page_list}.
 Gunakan nomor label tersebut, BUKAN nomor yang tercetak di gambar.
 
-Buat TEPAT TIGA pertanyaan dan jawaban dalam Bahasa Indonesia, diisi pada
-slot q1, q2, dan q3.
+Buat pertanyaan dan jawaban dalam Bahasa Indonesia untuk slot berikut SAJA:
+{slot_list}.
 
 SYARAT LINTAS HALAMAN (paling penting): SETIAP pertanyaan WAJIB memakai
 informasi dari DUA halaman berbeda dan TIDAK BOLEH bisa dijawab hanya dari
@@ -97,13 +111,18 @@ ATURAN LAIN:
 
 URUTAN PENGISIAN: "evidence" lebih dulu (kutipan singkat dan persis dari
 SETIAP halaman yang ditentukan, termasuk angka beserta nama baris/kolom atau
-periodenya; kedua kutipan harus berisi informasi berbeda), baru "answer"
-berdasarkan evidence tersebut.
+periodenya). Kutipan halaman pertama dan kedua HARUS berbeda: kutip kalimat
+atau angka yang hanya ada di halaman itu, jangan menyalin kutipan yang sama.
+Setelah itu isi "answer" berdasarkan kedua evidence tersebut.
+
+Pertanyaan harus spesifik dan minimal 8 kata: sebut wilayah, indikator, dan
+periode atau angka yang dibahas. Jangan buat pertanyaan umum seperti
+"Bagaimana perubahan permintaan dalam periode IV-2012?".
 
 HALAMAN PER PERTANYAAN:
 {pair_block}
 
-Kategori:
+Kategori yang boleh dipakai:
 {category_block}
 
 {avoid_block}
@@ -113,12 +132,10 @@ Keluarkan HANYA JSON valid. Jangan Markdown atau ```json.
 Format WAJIB:
 {{
   "result": {{
-    "q1": {{"query": "...", "category": "...",
+    "{first_slot}": {{"query": "...", "category": "...",
            "evidence": {{{evidence_example}}},
            "answer": "...", "answer_type": "pendek",
-           "source_pages": [{example_pages}]}},
-    "q2": {{ ...format yang sama, dengan halaman untuk q2... }},
-    "q3": {{ ...format yang sama, dengan halaman untuk q3... }}
+           "source_pages": [{example_pages}]}}{more_slots}
   }}
 }}
 """.strip()
@@ -331,7 +348,7 @@ def slot_pairs(page_numbers):
 
 
 def build_group_prompt(
-    tok, page_numbers, avoid_queries=(), feedback=None, categories=None
+    tok, page_numbers, avoid_queries=(), feedback=None, kept=None
 ):
     image_block = "\n\n".join(
         f"[Halaman {page}]\n<image>" for page in page_numbers
@@ -350,28 +367,39 @@ def build_group_prompt(
             "Perbaiki kesalahan tersebut.\n"
         )
 
+    kept = kept or {}
     pairs = slot_pairs(page_numbers)
-    forced = categories or [None] * len(SLOTS)
+    needed = [index for index in range(len(SLOTS)) if index not in kept]
     pair_block = "\n".join(
-        f"- {slot}: gabungkan halaman {pair[0]} DAN halaman {pair[1]} "
-        f'(isi evidence "halaman_{pair[0]}" dan "halaman_{pair[1]}", '
-        f"source_pages [{pair[0]}, {pair[1]}])"
-        + (f". Kategori WAJIB: {category}" if category else "")
-        for slot, pair, category in zip(SLOTS, pairs, forced)
+        f"- {SLOTS[index]}: gabungkan halaman {pairs[index][0]} DAN halaman "
+        f'{pairs[index][1]} (isi evidence "halaman_{pairs[index][0]}" dan '
+        f'"halaman_{pairs[index][1]}", source_pages '
+        f"[{pairs[index][0]}, {pairs[index][1]}])"
+        for index in needed
     )
-    first = pairs[0]
+    first = pairs[needed[0]]
     evidence_example = ", ".join(
         f'"halaman_{page}": "<kutipan dari halaman {page}>"' for page in first
+    )
+    more_slots = "".join(
+        f',\n    "{SLOTS[index]}": {{ ...format yang sama, dengan halaman '
+        f'untuk {SLOTS[index]}... }}'
+        for index in needed[1:]
     )
     instructions = INSTRUCTIONS.format(
         n_pages=len(page_numbers),
         page_list=", ".join(map(str, page_numbers)),
+        slot_list=", ".join(SLOTS[index] for index in needed),
         pair_block=pair_block,
-        category_block="\n".join(f"- {name}" for name in CATEGORIES),
+        category_block="\n".join(
+            f"- {name}" for name in allowed_categories(kept)
+        ),
         avoid_block=avoid_block,
         feedback_block=feedback_block,
+        first_slot=SLOTS[needed[0]],
         evidence_example=evidence_example,
         example_pages=", ".join(map(str, first)),
+        more_slots=more_slots,
     )
     return tok.apply_chat_template(
         [{"role": "user", "content": f"{image_block}\n\n{instructions}"}],
@@ -380,8 +408,7 @@ def build_group_prompt(
     )
 
 
-def item_schema(pair, category=None):
-    category_values = CATEGORIES if category is None else [category]
+def item_schema(pair, category_values):
     evidence_keys = [f"halaman_{page}" for page in pair]
     return {
         "type": "object",
@@ -418,19 +445,23 @@ def item_schema(pair, category=None):
     }
 
 
-def build_schema(page_numbers, categories=None):
-    categories = categories or [None] * len(SLOTS)
+def build_schema(page_numbers, kept=None):
+    """Schema for the slots that still need a question."""
+    kept = kept or {}
     pairs = slot_pairs(page_numbers)
+    categories = allowed_categories(kept)
+    needed = [SLOTS[i] for i in range(len(SLOTS)) if i not in kept]
     return {
         "type": "object",
         "properties": {
             "result": {
                 "type": "object",
                 "properties": {
-                    slot: item_schema(pair, category)
-                    for slot, pair, category in zip(SLOTS, pairs, categories)
+                    SLOTS[i]: item_schema(pairs[i], categories)
+                    for i in range(len(SLOTS))
+                    if i not in kept
                 },
-                "required": list(SLOTS),
+                "required": needed,
                 "additionalProperties": False,
             }
         },
@@ -488,132 +519,129 @@ def extract_json(text):
     raise ValueError("JSON output was truncated")
 
 
-def normalize_qa(data):
+def normalize_qa(data, slots):
+    """Return {slot index: item} for the requested slot indexes."""
     if not isinstance(data, dict):
         raise ValueError("Root must be an object")
     result = data.get("result", data)
     if not isinstance(result, dict):
-        raise ValueError("'result' must contain q1/q2/q3")
-    missing = [slot for slot in SLOTS if slot not in result]
+        raise ValueError("'result' must contain the requested slots")
+    missing = [SLOTS[i] for i in slots if SLOTS[i] not in result]
     if missing:
         raise ValueError(f"Missing slot(s): {', '.join(missing)}")
-    return {"result": [result[slot] for slot in SLOTS]}
+    return {index: result[SLOTS[index]] for index in slots}
 
 
 def normalize_text(text):
     return re.sub(r"\s+", " ", text.strip().lower())
 
 
-def validate_qa(qa, page_numbers):
-    result = qa.get("result")
-    if not isinstance(result, list) or len(result) != 3:
-        count = len(result) if isinstance(result, list) else 0
-        return False, f"Expected 3 questions, got {count}"
+def validate_item(item, pair, tag):
+    """Return an error message for one question, or None when it is fine."""
+    if not isinstance(item, dict):
+        return f"{tag} must be an object"
+    for field in (
+        "query",
+        "category",
+        "evidence",
+        "answer",
+        "answer_type",
+        "source_pages",
+    ):
+        if field not in item:
+            return f"{tag} missing '{field}'"
+    for field in ("query", "answer"):
+        if not isinstance(item[field], str) or not item[field].strip():
+            return f"{tag}.{field} is empty"
+    lowered = item["query"].lower()
+    if (
+        len(item["query"].split()) < MIN_QUERY_WORDS
+        or len(content_words(item["query"])) < MIN_CONTENT_WORDS
+    ):
+        return (
+            f"{tag}.query is too generic; name the region, indicator and "
+            "the period or figures it asks about"
+        )
+    for phrase in BANNED_PHRASES:
+        if phrase in lowered:
+            return f"{tag}.query uses the banned phrase '{phrase}'"
+    if item["category"] not in CATEGORIES:
+        return f"{tag} has invalid category {item['category']}"
+    if item["answer_type"] not in ("panjang", "pendek"):
+        return f"{tag} has invalid answer_type"
 
-    pairs = slot_pairs(page_numbers)
-    categories = []
-    for index, (item, pair) in enumerate(zip(result, pairs)):
-        tag = f"{SLOTS[index]}"
-        if not isinstance(item, dict):
-            return False, f"{tag} must be an object"
-        for field in (
-            "query",
-            "category",
-            "evidence",
-            "answer",
-            "answer_type",
-            "source_pages",
-        ):
-            if field not in item:
-                return False, f"{tag} missing '{field}'"
-        for field in ("query", "answer"):
-            if not isinstance(item[field], str) or not item[field].strip():
-                return False, f"{tag}.{field} is empty"
-        lowered = item["query"].lower()
-        for phrase in BANNED_PHRASES:
-            if phrase in lowered:
-                return False, f"{tag}.query uses the banned phrase '{phrase}'"
-        if item["category"] not in CATEGORIES:
-            return False, f"{tag} has invalid category {item['category']}"
-        if item["answer_type"] not in ("panjang", "pendek"):
-            return False, f"{tag} has invalid answer_type"
+    pages = item["source_pages"]
+    if (
+        not isinstance(pages, list)
+        or any(type(page) is not int for page in pages)
+        or set(pages) != set(pair)
+    ):
+        return (
+            f"{tag}.source_pages must be exactly pages {list(pair)}, "
+            f"got {pages}"
+        )
 
-        pages = item["source_pages"]
-        if (
-            not isinstance(pages, list)
-            or any(type(page) is not int for page in pages)
-            or set(pages) != set(pair)
-        ):
-            return (
-                False,
-                f"{tag}.source_pages must be exactly pages "
-                f"{list(pair)}, got {pages}",
-            )
-
-        evidence = item["evidence"]
-        if not isinstance(evidence, dict):
-            return False, f"{tag}.evidence must be an object"
-        quotes = []
-        for page in pair:
-            quote = evidence.get(f"halaman_{page}")
-            if not isinstance(quote, str) or len(quote.strip()) < MIN_QUOTE_CHARS:
-                return (
-                    False,
-                    f"{tag}.evidence needs a real quote from page {page}",
-                )
-            quotes.append(normalize_text(quote))
-        if (
-            difflib.SequenceMatcher(None, quotes[0], quotes[1]).ratio()
-            >= MAX_QUOTE_SIMILARITY
-        ):
-            return (
-                False,
-                f"{tag}: the evidence from pages {pair[0]} and {pair[1]} is "
-                "the same, so the question does not need both pages",
-            )
-        categories.append(item["category"])
-
-    if len(set(categories)) != 3:
-        return False, f"Duplicate categories: {categories}"
-    return True, None
+    evidence = item["evidence"]
+    if not isinstance(evidence, dict):
+        return f"{tag}.evidence must be an object"
+    quotes = []
+    for page in pair:
+        quote = evidence.get(f"halaman_{page}")
+        if not isinstance(quote, str) or len(quote.strip()) < MIN_QUOTE_CHARS:
+            return f"{tag}.evidence needs a real quote from page {page}"
+        quotes.append(normalize_text(quote))
+    if (
+        difflib.SequenceMatcher(None, quotes[0], quotes[1]).ratio()
+        >= MAX_QUOTE_SIMILARITY
+    ):
+        return (
+            f"{tag}: the evidence from pages {pair[0]} and {pair[1]} is the "
+            "same, so the question does not need both pages"
+        )
+    return None
 
 
-def plan_categories(parsed):
-    """Keep the distinct categories the model chose and replace repeats."""
-    if not parsed:
-        return None
-    used, plan = [], []
-    for item in parsed.get("result", [])[:3]:
-        category = item.get("category") if isinstance(item, dict) else None
-        if category in CATEGORIES and category not in used:
-            used.append(category)
-            plan.append(category)
-        else:
-            plan.append(None)
-    plan += [None] * (3 - len(plan))
-    spare = [name for name in CATEGORIES if name not in used]
-    return [name or spare.pop(0) for name in plan]
+def allowed_categories(kept):
+    used = {item["category"] for item in kept.values()}
+    return [name for name in CATEGORIES if name not in used]
 
 
-def drop_evidence(qa):
-    return {
-        "result": [
-            {key: value for key, value in item.items() if key != "evidence"}
-            for item in qa["result"]
-        ]
-    }
+def drop_evidence(item):
+    return {key: value for key, value in item.items() if key != "evidence"}
 
 
 def normalize_query(query):
     return re.sub(r"\s+", " ", query.strip().lower())
 
 
+def content_words(query):
+    words = re.findall(r"[a-z0-9][a-z0-9.,%-]*", query.lower())
+    return [
+        word.strip(".,-")
+        for word in words
+        if word.strip(".,-") and word not in STOPWORDS
+    ]
+
+
 def is_near_duplicate(query, seen_queries, threshold=0.85):
-    normalized = normalize_query(query)
-    return any(
-        difflib.SequenceMatcher(None, normalized, previous).ratio() >= threshold
-        for previous in seen_queries
-    )
+    """Compare content words only, so a shared question template does not
+    make different questions look alike."""
+    words = content_words(query)
+    text = " ".join(words)
+    word_set = set(words)
+    for previous in seen_queries:
+        other = content_words(previous)
+        if not other:
+            continue
+        union = word_set | set(other)
+        if union and len(word_set & set(other)) / len(union) >= MAX_WORD_OVERLAP:
+            return True
+        if (
+            difflib.SequenceMatcher(None, text, " ".join(other)).ratio()
+            >= threshold
+        ):
+            return True
+    return False
 
 
 def find_duplicates(queries, previous, threshold):
@@ -725,14 +753,32 @@ def is_schema_compile_error(exc):
     )
 
 
+def make_llm(args, group_size):
+    from vllm import LLM
+
+    return LLM(
+        model=args.model,
+        dtype="half",
+        max_model_len=args.max_model_len,
+        gpu_memory_utilization=args.gpu_util,
+        limit_mm_per_prompt={"image": group_size},
+        trust_remote_code=True,
+        tokenizer_mode="slow",
+        tensor_parallel_size=args.tensor_parallel_size,
+        enforce_eager=False,
+        mm_processor_kwargs={"max_dynamic_patch": args.max_dynamic_patch},
+    )
+
+
 def make_job(key, doc, pages):
     return {
         "key": key,
         "doc": doc,
         "pages": pages,
         "temperature": 0.0,
-        "categories": None,
         "feedback": None,
+        # Slot index -> question accepted in an earlier attempt.
+        "kept": {},
     }
 
 
@@ -754,7 +800,7 @@ def run_batch(llm, tok, jobs, max_edge, max_tokens, stops, seen_by_doc):
                     page_numbers,
                     seen_by_doc[job["doc"]],
                     job["feedback"],
-                    job["categories"],
+                    job["kept"],
                 ),
                 "multi_modal_data": {"image": images},
             }
@@ -764,7 +810,7 @@ def run_batch(llm, tok, jobs, max_edge, max_tokens, stops, seen_by_doc):
                 max_tokens,
                 stops,
                 job["temperature"],
-                build_schema(page_numbers, job["categories"]),
+                build_schema(page_numbers, job["kept"]),
             )
         )
         submitted.append(job)
@@ -959,21 +1005,8 @@ def main():
             print(f"Compacted to {compact_jsonl(output_path)} records.")
         return
 
-    from vllm import LLM
-
     print(f"Loading {args.model}...")
-    llm = LLM(
-        model=args.model,
-        dtype="half",
-        max_model_len=args.max_model_len,
-        gpu_memory_utilization=args.gpu_util,
-        limit_mm_per_prompt={"image": safe_group_size},
-        trust_remote_code=True,
-        tokenizer_mode="slow",
-        tensor_parallel_size=args.tensor_parallel_size,
-        enforce_eager=False,
-        mm_processor_kwargs={"max_dynamic_patch": args.max_dynamic_patch},
-    )
+    llm = make_llm(args, safe_group_size)
     tok, stops = load_tokenizer_and_stops(args.model)
 
     ok = 0
@@ -1006,10 +1039,8 @@ def main():
 
                 retry = []
 
-                def reject(job, message, parsed=None):
+                def reject(job, message):
                     last_error[job["key"]] = message
-                    if "Duplicate categories" in message:
-                        job["categories"] = plan_categories(parsed)
                     job["feedback"] = message
                     job["temperature"] = 0.5
                     retry.append(job)
@@ -1018,46 +1049,68 @@ def main():
                     reject(job, message)
 
                 for job, output in results:
-                    key, doc = job["key"], job["doc"]
+                    key, doc, kept = job["key"], job["doc"], job["kept"]
                     page_numbers = [page for page, _ in job["pages"]]
+                    pairs = slot_pairs(page_numbers)
+                    needed = [i for i in range(len(SLOTS)) if i not in kept]
                     completion = output.outputs[0] if output.outputs else None
                     raw = completion.text.strip() if completion else ""
                     last_raw[key] = raw
-                    parsed = None
                     try:
-                        parsed = normalize_qa(extract_json(raw))
-                        valid, error = validate_qa(parsed, page_numbers)
-                        if not valid:
-                            raise ValueError(error)
+                        items = normalize_qa(extract_json(raw), needed)
                     except Exception as exc:
                         message = str(exc)
                         if completion and completion.finish_reason == "length":
                             message += (
                                 f" (hit {args.max_tokens}-token output limit)"
                             )
-                        reject(job, message, parsed)
+                        reject(job, message)
                         continue
 
-                    queries = [item["query"] for item in parsed["result"]]
-                    duplicates, novel = find_duplicates(
-                        queries, seen_by_doc[doc], args.dup_threshold
+                    # Keep every question that passes on its own, so a retry
+                    # only has to redo the ones that failed.
+                    used = {item["category"] for item in kept.values()}
+                    taken = [normalize_query(i["query"]) for i in kept.values()]
+                    messages = []
+                    for index, item in items.items():
+                        tag = SLOTS[index]
+                        error = validate_item(item, pairs[index], tag)
+                        if not error and item["category"] in used:
+                            error = (
+                                f"{tag} reuses the category "
+                                f"'{item['category']}'"
+                            )
+                        if not error and is_near_duplicate(
+                            item["query"],
+                            seen_by_doc[doc] + taken,
+                            args.dup_threshold,
+                        ):
+                            error = (
+                                f"{tag} is a near-duplicate question: "
+                                f"{item['query']}"
+                            )
+                        if error:
+                            messages.append(error)
+                            continue
+                        kept[index] = item
+                        used.add(item["category"])
+                        taken.append(normalize_query(item["query"]))
+
+                    if len(kept) < len(SLOTS):
+                        reject(job, "; ".join(messages))
+                        continue
+
+                    seen_by_doc[doc].extend(
+                        normalize_query(kept[i]["query"])
+                        for i in range(len(SLOTS))
                     )
-                    if duplicates:
-                        reject(
-                            job,
-                            "Near-duplicate question(s): "
-                            + " | ".join(duplicates),
-                            parsed,
-                        )
-                        continue
-
-                    seen_by_doc[doc].extend(novel)
                     last_error.pop(key, None)
                     ok += 1
+                    result = [kept[i] for i in range(len(SLOTS))]
+                    if not args.keep_evidence:
+                        result = [drop_evidence(item) for item in result]
                     record = base_record(job, attempt)
-                    record["qa"] = (
-                        parsed if args.keep_evidence else drop_evidence(parsed)
-                    )
+                    record["qa"] = {"result": result}
                     write_record(stream, record)
                     print(f"OK   {key}: 3/3 QA")
 
@@ -1066,6 +1119,7 @@ def main():
             for job in jobs:
                 fail += 1
                 message = last_error.get(job["key"], "unknown failure")
+                message += f" (accepted {len(job['kept'])}/3 questions)"
                 record = base_record(job, args.attempts)
                 record.update(
                     {
