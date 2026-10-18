@@ -11,7 +11,7 @@
 #   Kajian Ekonomi dan Keuangan Regional Provinsi Bali November 2016 p95
 #   PEKKI_EDISI_III_2020 p81
 
-8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012: 14-15 23-24 28,29,31 31-33 33-35 35-37 51-52 55-57
+8dabadfb728f43cf89fe3bf6bb7614a3KERProvinsiKalimantanTengahTriwulanIV2012: 14-15 23-24 28,29,31 31-33 33-35 35-37 51,52,54 54-56 56-57
 Analisis-Inflasi-TPIP-Februari-2026: 1-2
 Analisis-Inflasi-TPIP-Maret-2026: 1-2
 Buletin - Beyond Infinity Edisi Desember 2025: 18-19 26,28
@@ -21,8 +21,8 @@ KSK-4626: 48-49 65-66
 Kajian Ekonomi dan Keuangan Regional Provinsi Bali November 2016: 30-31 85-86 89-90 131-132
 Kajian Ekonomi dan Keuangan Regional Provinsi Banten Triwulan II-2015: 45-46 78-79 82-83
 Kajian Ekonomi dan Keuangan Regional Provinsi NTT Agustus 2018: 47-48 82-83
-LAPKEU OJK 2015 audited: 27-28 33-34
-LAPORAN KEUANGAN TAHUN 2020 (AUDITED): 45-46
+LAPKEU OJK 2015 audited: 27-28 33-34 40-41
+LAPORAN KEUANGAN TAHUN 2020 (AUDITED): 44-46 46-47 64-65 74-75
 LKBI-Tw.I-2025: 84-85 90-91
 Laporan Perekonomian Provinsi Bali Agustus 2020: 93-95
 Laporan Perekonomian Provinsi DKI Jakarta Februari 2025: 49-50 107-108 112-114 126-127

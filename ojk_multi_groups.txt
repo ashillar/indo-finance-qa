@@ -1,0 +1,35 @@
+# Page groups for ojk_multi. One line per document:
+#   <document>: <group> <group> ...
+# A group is a range (45-47) or a list (38,39,41), 2-3 pages.
+# Merge, split or delete groups so each one holds pages whose
+# content is related. Lines starting with # are ignored.
+#
+# Pages with no neighbour (not grouped):
+#   Buletin - Beyond Infinity Edisi Desember 2025 p28
+
+Buku Mengenal dan Memahami Perdagangan Karbon bagi SJK: 38-39 45-47 54-55 135-137
+Buletin - Beyond Infinity Edisi Desember 2025: 23-25
+LAPKEU OJK 2015 audited: 38-40 40-41
+LAPORAN KEUANGAN TAHUN 2020 (AUDITED): 45-46 64-65
+LK OJK Tahun 2018 (AUDITED): 33,34,36 36-37
+LK OJK Tahun 2019 (AUDITED): 17-18 39-40 44-45
+LK Situs OJK: 11-12
+Laporan Keuangan OJK Tahun 2021 (Audited): 51-53 53-54 69,70,72 72-74
+Laporan Keuangan OJK Tahun 2022 (Audited): 52-53
+Laporan Keuangan OJK Tahun 2023 (Audited): 61-62
+Laporan Keuangan OJK Tahun 2024 (Audited): 21-22 73-74 85-86 100-101
+Laporan Perkembangan Keuangan Syariah 2014: 93-94
+Laporan Perkembangan Keuangan Syariah 2015: 147-149 161-163 167-168
+Laporan Tahunan OJK 2013: 124-125
+Laporan Tahunan Perbankan 2014: 24-25 29-30 34-35 60-61 148-149
+Majalah Edukasi Konsumen TW III-2024-: 10-12 12-14 14-16 16-17
+Majalah Edukasi Konsumen Triwulan II 2023: 26-27
+Majalah Edukasi Konsumen Triwulan III 2023: 9-11 38-39
+Majalah Edukasi Konsumen Triwulan IV 2023: 40-41
+Majalah Edukasi Konsumen Triwulan IV 2025: 41-42
+Majalah Edukasi Konsumen Tw II 2025: 6-8 8-9
+OJK 20AR2016: 99-101 130-132
+Peta Jalan Pengembangan dan Penguatan Industri Penjaminan Indonesia 2024-2028: 26-28 44-45 58-59
+Peta Jalan pengembangan dan Penguatan Dana Pensiun Indonesia 2024-2028: 45-46
+Roadmap Pengembangan dan Penguatan LKM 2024-2028-FINAL: 40-41
+laporan tahunan ojk 2014: 111-112 170-171 227-229
