@@ -13,15 +13,17 @@ CLUSTER_ROOT = "/home/cluster-dgx1/ashillafryda/vllm-project"
 
 SOURCES = {
     "BI": {
-        "internvl": "bi_multipage_batch_internvl.jsonl",
-        "qwen": "bi_multipage_qwen25_vl.jsonl",
+        "internvl": "bi_multipage_internvl_v4.jsonl",
+        "qwen": "bi_multipage_qwen_v4_new.jsonl",
+        "gemma": "bi_multipage_gemma_v4.jsonl",
         "images_name": "bi_images",
         # Folders searched for the page images (first one that exists is used).
         "image_dirs": ["bi_multi", "bi-multi", "bi_images/multi", "bi_images"],
     },
     "OJK": {
-        "internvl": "ojk_multipage_batch_internvl.jsonl",
-        "qwen": "ojk_multipage_qwen25_vl.jsonl",
+        "internvl": "ojk_multipage_internvl_v4.jsonl",
+        "qwen": "ojk_multipage_qwen25_vl_v4.jsonl",
+        "gemma": "ojk_multipage_gemma_v4.jsonl"
         "images_name": "ojk_images",
         "image_dirs": ["ojk_multi", "ojk-multi", "ojk_images/multi", "ojk_images"],
     },
