@@ -167,15 +167,31 @@ def resolve_page_image(source_path, image_index):
     local = Path(source)
     if local.exists():
         return local
+    
     name = os.path.basename(source)
     if source.startswith(CLUSTER_PREFIX):
         rel = source[len(CLUSTER_PREFIX):].lstrip("/")
-        for root in (BASE_DIR / SOURCES_IMAGES_NAME, BASE_DIR):
-            if (root / rel).exists():
-                return root / rel
+        
+        # Candidate paths to check
+        candidates = [
+            BASE_DIR / SOURCES_IMAGES_NAME / rel,
+            BASE_DIR / rel,
+        ]
+        
+        # If path in cluster was bi_images/multi/... map it to bi_multi/...
+        if rel.startswith("multi/"):
+            sub_rel = rel[len("multi/"):]
+            candidates.extend([
+                BASE_DIR / "bi_multi" / sub_rel,
+                BASE_DIR / "ojk_multi" / sub_rel,
+            ])
+            
+        for path in candidates:
+            if path.exists():
+                return path
+
     hits = image_index.get(name, [])
     return Path(hits[0]) if hits else None
-
 
 def record_pages(record):
     """List of (page_label, source_path) for a record, in page order."""
