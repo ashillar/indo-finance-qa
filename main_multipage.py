@@ -23,7 +23,7 @@ SOURCES = {
     "OJK": {
         "internvl": "ojk_multipage_internvl_v4.jsonl",
         "qwen": "ojk_multipage_qwen25_vl_v4.jsonl",
-        "gemma": "ojk_multipage_gemma_v4.jsonl"
+        "gemma": "ojk_multipage_gemma_v4.jsonl",
         "images_name": "ojk_images",
         "image_dirs": ["ojk_multi", "ojk-multi", "ojk_images/multi", "ojk_images"],
     },
@@ -37,7 +37,7 @@ SOURCES_IMAGES_NAME = ""
 COMMENTS_PATH = BASE_DIR / "qa_comments.json"
 
 st.set_page_config(
-    page_title="Multi-Page QA Review: InternVL vs Qwen",
+    page_title="Multi-Page QA Review: InternVL vs Qwen vs Gemma",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
