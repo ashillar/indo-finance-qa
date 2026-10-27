@@ -30,7 +30,7 @@ SOURCES = {
 }
 
 # Set from the sidebar source selector before any data is loaded.
-INTERNVL_JSONL = QWEN_JSONL = IMAGE_ROOT = None
+INTERNVL_JSONL = QWEN_JSONL = GEMMA_JSONL = IMAGE_ROOT = None
 IMAGE_ROOTS = []
 CLUSTER_PREFIX = ""
 SOURCES_IMAGES_NAME = ""
@@ -452,6 +452,7 @@ def init_widget(key, default):
 MODELS = [
     ("internvl", "InternVL", "banner-internvl"),
     ("qwen", "Qwen2.5-VL", "banner-qwen"),
+    ("gemma", "Gemma 3", "banner-gemma"),
 ]
 CRITERION_BUTTONS = ["Pass", "Fail", "N/A"]
 DECISIONS = ["Retain", "Revise", "Discard"]
@@ -657,6 +658,7 @@ if st.session_state.get("_last_source") != source_name:
 _source = SOURCES[source_name]
 INTERNVL_JSONL = DATA_DIR / _source["internvl"]
 QWEN_JSONL = DATA_DIR / _source["qwen"]
+GEMMA_JSONL = DATA_DIR / _source["gemma"]
 IMAGE_ROOTS = [BASE_DIR / name for name in _source["image_dirs"]]
 IMAGE_ROOT = next((p for p in IMAGE_ROOTS if p.exists()), IMAGE_ROOTS[0])
 SOURCES_IMAGES_NAME = _source["images_name"]
@@ -666,11 +668,12 @@ CLUSTER_PREFIX = f"{CLUSTER_ROOT}/{_source['images_name']}"
 records_by_model = {
     "internvl": load_jsonl(str(INTERNVL_JSONL)),
     "qwen": load_jsonl(str(QWEN_JSONL)),
+    "gemma": load_jsonl(str(GEMMA_JSONL)),
 }
 image_index = index_images(tuple(str(p) for p in IMAGE_ROOTS))
 
 if not any(records_by_model.values()):
-    st.error("Neither multi-page JSONL file (InternVL, Qwen) could be loaded.")
+    st.error("None of the multi-page JSONL files (InternVL, Qwen, Gemma) could be loaded.")
     st.stop()
 
 by_file = {key: group_by_file(recs) for key, recs in records_by_model.items()}
@@ -692,9 +695,10 @@ with st.sidebar:
         "Models present",
         [
             "All page groups",
-            "In both models",
+            "In all 3 models",
             "InternVL only",
             "Qwen only",
+            "Gemma only",
             "Has errors",
             "Missing image",
         ],
@@ -769,11 +773,13 @@ for name in all_files:
     file_stats[name] = (reviewed, total)
 
     present = {key for key, rec in picked.items() if rec}
-    if view_filter == "In both models" and len(present) < 2:
+    if view_filter == "In all 3 models" and len(present) < 3:
         continue
     if view_filter == "InternVL only" and present != {"internvl"}:
         continue
     if view_filter == "Qwen only" and present != {"qwen"}:
+        continue
+    if view_filter == "Gemma only" and present != {"gemma"}:
         continue
     if view_filter == "Has errors" and not any(status_label(rec) == "error" for rec in picked.values() if rec):
         continue
@@ -858,7 +864,7 @@ with st.sidebar:
     with st.expander("Data paths"):
         for key, title, _ in MODELS:
             st.caption(f"{title} JSONL")
-            st.code(str({"internvl": INTERNVL_JSONL, "qwen": QWEN_JSONL}[key]))
+            st.code(str({"internvl": INTERNVL_JSONL, "qwen": QWEN_JSONL, "gemma": GEMMA_JSONL}[key]))
         st.caption("Images root")
         st.code(str(IMAGE_ROOT))
         st.caption("Reviews stored in")
@@ -942,7 +948,7 @@ with right_pane:
         )
 
     if view_mode == "Compare all":
-        for column, (model_key, title, banner) in zip(st.columns(2, gap="small"), MODELS):
+        for column, (model_key, title, banner) in zip(st.columns(len(MODELS), gap="small"), MODELS):
             with column:
                 section(model_key, title, banner)
     elif view_mode == "Raw JSON":
