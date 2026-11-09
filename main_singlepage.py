@@ -1,0 +1,1283 @@
+import html
+import json
+import os
+from datetime import datetime, timezone
+from pathlib import Path
+
+import requests
+import streamlit as st
+
+BASE_DIR = Path(__file__).resolve().parent
+DATA_DIR = BASE_DIR / "json"
+DATA_ROOT = BASE_DIR
+CLUSTER_ROOT = "/home/cluster-dgx1/ashillafryda/vllm-project"
+
+SOURCES = {
+    "BI": {
+        "internvl": "bi_single_final_internvl.jsonl",
+        "qwen": "bi_single_qwen25_vl.jsonl",
+        "gemma": "bi_single_batch2_gemma3_4b.jsonl",
+        "images": ["bi_images", "bi-single", "bi_single"],
+    },
+    "OJK": {
+        "internvl": "ojk_single_final_internvl.jsonl",
+        "qwen": "ojk_single_qwen25_vl.jsonl",
+        "gemma": "ojk_single_final_gemma3_4b.jsonl",
+        "images": ["ojk_images", "ojk-single", "ojk_single"],
+    },
+}
+
+# Set from the sidebar source selector before any data is loaded.
+INTERNVL_JSONL = QWEN_JSONL = GEMMA_JSONL = IMAGE_ROOT = None
+CLUSTER_PREFIX = ""
+COMMENTS_PATH = BASE_DIR / "qa_comments.json"
+
+st.set_page_config(
+    page_title="Single-Page QA Review & JSON Editor: InternVL vs Qwen vs Gemma",
+    page_icon="📄",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+st.markdown(
+    """
+    <style>
+    .block-container {
+        padding-top: 3rem;
+        padding-bottom: 2rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        max-width: 100%;
+    }
+    .main-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #111827;
+        line-height: 1.3;
+    }
+    .main-subtitle {
+        color: #6b7280;
+        font-size: 12.5px;
+        margin-top: 2px;
+        word-break: break-all;
+    }
+    .model-banner {
+        border-radius: 9px;
+        padding: 7px 12px;
+        font-weight: 700;
+        font-size: 13.5px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .banner-internvl { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .banner-qwen { background: #f5f3ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+    .banner-gemma { background: #f0fdfa; color: #0f766e; border: 1px solid #99f6e4; }
+    .qa-category {
+        display: inline-block;
+        font-size: 11px;
+        color: #4b5563;
+        background: #f3f4f6;
+        padding: 2px 8px;
+        border-radius: 6px;
+        margin: 0 6px 0 4px;
+    }
+    .qa-question {
+        font-size: 14px;
+        line-height: 1.5;
+        font-weight: 600;
+        color: #111827;
+        margin: 6px 0;
+    }
+    .answer-label {
+        font-size: 10px;
+        font-weight: 700;
+        color: #6b7280;
+        letter-spacing: 0.06em;
+        margin-bottom: 3px;
+    }
+    .answer-box {
+        display: inline-block;
+        padding: 6px 10px;
+        background: #ecfdf5;
+        border: 1px solid #a7f3d0;
+        border-radius: 6px;
+        color: #047857;
+        font-size: 13px;
+        font-weight: 600;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+    .answer-type { color: #9ca3af; font-size: 11px; margin-left: 6px; }
+    .image-panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: 6px;
+        color: #1f2937;
+    }
+    .record-counter { text-align: center; font-size: 13px; color: #6b7280; padding-top: 6px; }
+    section[data-testid="stSidebar"] { background: #f9fafb; }
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+
+@st.cache_data
+def load_jsonl(path_string):
+    path = Path(path_string)
+    records = []
+    if not path.exists():
+        return records
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        records.append(json.loads(line))
+    return records
+
+
+@st.cache_data
+def index_images(root_string):
+    root = Path(root_string)
+    index = {}
+    if not root.exists():
+        return index
+    for path in root.rglob("*"):
+        if path.is_file() and path.suffix.lower() in {".png", ".jpg", ".jpeg", ".webp", ".pdf"}:
+            index.setdefault(path.name, []).append(str(path))
+    return index
+
+
+def remap_cluster_path(source_path):
+    if not source_path:
+        return None
+    source = str(source_path)
+    if source.startswith(CLUSTER_PREFIX):
+        mapped = IMAGE_ROOT / source[len(CLUSTER_PREFIX):].lstrip("/")
+        if mapped.exists():
+            return mapped
+    local = Path(source)
+    if local.exists():
+        return local
+    return None
+
+
+def resolve_image(record, image_index):
+    if not record:
+        return None
+    mapped = remap_cluster_path(record.get("source_path"))
+    if mapped:
+        return mapped
+    filename = os.path.basename(str(record.get("file", "")))
+    hits = image_index.get(filename, [])
+    if hits:
+        return Path(hits[0])
+    candidate = IMAGE_ROOT / filename
+    if candidate.exists():
+        return candidate
+    return None
+
+
+def supabase_config():
+    """Return (url, key) from Streamlit secrets, or None to use the local file."""
+    try:
+        cfg = st.secrets["supabase"]
+        return cfg["url"].rstrip("/"), cfg["key"]
+    except Exception:
+        return None
+
+
+def _sb_headers(key, **extra):
+    return {"apikey": key, "Authorization": f"Bearer {key}", **extra}
+
+
+@st.cache_data(ttl=20, show_spinner=False)
+def _load_remote_comments(url, key):
+    comments = {}
+    start, page = 0, 1000
+    while True:
+        resp = requests.get(
+            f"{url}/rest/v1/reviews",
+            params={"select": "filename,model_key,qa_index,data"},
+            headers=_sb_headers(key, Range=f"{start}-{start + page - 1}"),
+            timeout=15,
+        )
+        resp.raise_for_status()
+        rows = resp.json()
+        for row in rows:
+            comments.setdefault(row["filename"], {}).setdefault(
+                row["model_key"], {}
+            )[str(row["qa_index"])] = row["data"]
+        if len(rows) < page:
+            return comments
+        start += page
+
+
+def load_comments():
+    config = supabase_config()
+    if config:
+        try:
+            return _load_remote_comments(*config)
+        except requests.RequestException as exc:
+            st.error(f"Could not load reviews from Supabase: {exc}")
+            return {}
+    if not COMMENTS_PATH.exists():
+        return {}
+    try:
+        data = json.loads(COMMENTS_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+CRITERIA = [
+    (
+        "query_clarity",
+        "Query Clarity",
+        "The query should be specific and unambiguous, targeting a particular topic in a document, and avoiding vague or overly general questions.",
+    ),
+    (
+        "answer_correctness",
+        "Answer Correctness",
+        "The answer must be factually correct and directly supported by the visual content. It should not include hallucinations or inferred information beyond what is presented. If calculation is involved, the answer should be accurate.",
+    ),
+    (
+        "category_appropriateness",
+        "Category Appropriateness",
+        "The question should match its assigned category (e.g., table-numerical calculations). Mislabelled or ambiguous categories should lead to revision or rejection.",
+    ),
+    (
+        "multi_page_sources",
+        "Multi-Page Sources",
+        "For multi-page queries, if the answer is derived from multiple pages, all referenced page sources must be accurately identified. Use N/A for single-page items.",
+    ),
+]
+CRITERION_CHOICES = ["Unreviewed", "Pass", "Fail", "N/A"]
+DECISION_CHOICES = ["Unreviewed", "Retain", "Revise", "Discard"]
+
+
+def file_review_bucket(file_entry):
+    if not isinstance(file_entry, dict):
+        return {}
+    if (
+        "internvl" not in file_entry
+        and "qwen" not in file_entry
+        and "gemma" not in file_entry
+    ):
+        return {}
+    return file_entry
+
+
+def save_qa_review_remote(config, filename, model_key, qa_index, payload):
+    url, key = config
+    match = {
+        "filename": f"eq.{filename}",
+        "model_key": f"eq.{model_key}",
+        "qa_index": f"eq.{qa_index}",
+    }
+    resp = requests.get(
+        f"{url}/rest/v1/reviews",
+        params={"select": "data", **match},
+        headers=_sb_headers(key),
+        timeout=15,
+    )
+    resp.raise_for_status()
+    rows = resp.json()
+    existing = rows[0]["data"] if rows and isinstance(rows[0]["data"], dict) else {}
+    existing.update(payload)
+    existing["updated_at"] = datetime.now(timezone.utc).isoformat()
+    resp = requests.post(
+        f"{url}/rest/v1/reviews",
+        params={"on_conflict": "filename,model_key,qa_index"},
+        headers=_sb_headers(
+            key,
+            **{
+                "Content-Type": "application/json",
+                "Prefer": "resolution=merge-duplicates,return=minimal",
+            },
+        ),
+        json={
+            "filename": filename,
+            "model_key": model_key,
+            "qa_index": int(qa_index),
+            "data": existing,
+        },
+        timeout=15,
+    )
+    resp.raise_for_status()
+    _load_remote_comments.clear()
+
+
+def save_qa_review(filename, model_key, qa_index, payload):
+    config = supabase_config()
+    if config:
+        save_qa_review_remote(config, filename, model_key, qa_index, payload)
+        return
+    comments = load_comments()
+    file_entry = file_review_bucket(comments.get(filename, {}))
+    comments[filename] = file_entry
+    model_entry = file_entry.setdefault(model_key, {})
+    if not isinstance(model_entry, dict):
+        model_entry = {}
+        file_entry[model_key] = model_entry
+    existing = model_entry.get(str(qa_index), {})
+    if not isinstance(existing, dict):
+        existing = {}
+    existing.update(payload)
+    existing["updated_at"] = datetime.now(timezone.utc).isoformat()
+    model_entry[str(qa_index)] = existing
+    COMMENTS_PATH.write_text(
+        json.dumps(comments, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
+
+def qa_comment(comments, filename, model_key, qa_index):
+    file_entry = comments.get(filename, {})
+    if not isinstance(file_entry, dict):
+        return ""
+    model_entry = file_entry.get(model_key, {})
+    if not isinstance(model_entry, dict):
+        return ""
+    entry = model_entry.get(str(qa_index), "")
+    if isinstance(entry, dict):
+        return str(entry.get("comment", ""))
+    return str(entry or "")
+
+
+def saved_qa_entry(comments, filename, model_key, qa_index):
+    file_entry = comments.get(filename, {})
+    if not isinstance(file_entry, dict):
+        return {}
+    model_entry = file_entry.get(model_key, {})
+    if not isinstance(model_entry, dict):
+        return {}
+    entry = model_entry.get(str(qa_index), {})
+    return entry if isinstance(entry, dict) else {}
+
+
+def filename_of(record):
+    return os.path.basename(str(record.get("file") or record.get("source_path") or ""))
+
+
+def group_by_file(records):
+    grouped = {}
+    for record in records:
+        name = filename_of(record)
+        if not name:
+            continue
+        grouped.setdefault(name, []).append(record)
+    return grouped
+
+
+def pick_record(attempts, prefer_success=True):
+    if not attempts:
+        return None
+    if prefer_success:
+        for record in reversed(attempts):
+            qa = record.get("qa")
+            if isinstance(qa, dict) and qa.get("result"):
+                return record
+    return attempts[-1]
+
+
+def qa_items(record):
+    if not record:
+        return []
+    qa = record.get("qa")
+    if isinstance(qa, dict) and isinstance(qa.get("result"), list):
+        return qa["result"]
+    raw = record.get("raw_output")
+    if isinstance(raw, str) and raw.strip():
+        try:
+            parsed = json.loads(raw)
+            if isinstance(parsed, dict) and isinstance(parsed.get("result"), list):
+                return parsed["result"]
+        except json.JSONDecodeError:
+            pass
+    return []
+
+
+def status_label(record):
+    if not record:
+        return "missing"
+    if record.get("error"):
+        return "error"
+    if qa_items(record):
+        return "ok"
+    return "empty"
+
+
+def init_widget(key, default):
+    if key not in st.session_state:
+        st.session_state[key] = default
+
+
+MODELS = [
+    ("internvl", "InternVL", "banner-internvl"),
+    ("qwen", "Qwen2.5-VL", "banner-qwen"),
+    ("gemma", "Gemma 3", "banner-gemma"),
+]
+CRITERION_BUTTONS = ["Pass", "Fail", "N/A"]
+DECISIONS = ["Retain", "Revise", "Discard"]
+DECISION_BADGE = {
+    "Retain": ":green[● Retain]",
+    "Revise": ":orange[● Revise]",
+    "Discard": ":red[● Discard]",
+    "Unreviewed": ":gray[○ Unreviewed]",
+}
+
+
+def autosave_review(prefix, filename, model_key, number, query, original_qa=None):
+    decision = st.session_state.get(f"decision-{prefix}") or "Unreviewed"
+    payload = {
+        "query": query,
+        "decision": decision,
+        "criteria": {
+            field: st.session_state.get(f"crit-{prefix}-{field}") or "Unreviewed"
+            for field, _, _ in CRITERIA
+        },
+    }
+    if f"comment-{prefix}" in st.session_state:
+        payload["comment"] = str(st.session_state.get(f"comment-{prefix}") or "").strip()
+
+    json_key = f"revjson-{prefix}"
+    if json_key in st.session_state:
+        raw_text = str(st.session_state.get(json_key) or "").strip()
+        if raw_text:
+            try:
+                parsed_qa = json.loads(raw_text)
+                if not isinstance(parsed_qa, dict):
+                    st.session_state[f"jsonerr-{prefix}"] = "Revised QA JSON must be a JSON object ({...})."
+                    return
+                payload["revised_qa"] = parsed_qa
+                payload["query"] = str(parsed_qa.get("query", query))
+                st.session_state.pop(f"jsonerr-{prefix}", None)
+            except json.JSONDecodeError as exc:
+                st.session_state[f"jsonerr-{prefix}"] = f"Invalid JSON: {exc}"
+                return
+    elif decision == "Revise" and isinstance(original_qa, dict):
+        payload["revised_qa"] = original_qa
+
+    try:
+        save_qa_review(filename, model_key, number, payload)
+    except Exception as exc:  # network or disk problem: show it instead of failing silently
+        st.session_state["_save_error"] = f"Could not save review: {exc}"
+        return
+    st.session_state.pop("_save_error", None)
+    st.session_state[f"saved-{prefix}"] = datetime.now().strftime("%H:%M:%S")
+
+
+def set_all_pass(prefix, filename, model_key, number, query, original_qa=None):
+    for field, _, _ in CRITERIA:
+        st.session_state[f"crit-{prefix}-{field}"] = "Pass"
+    autosave_review(prefix, filename, model_key, number, query, original_qa)
+
+
+def undo_discard(prefix, filename, model_key, number, query, original_qa=None):
+    st.session_state[f"decision-{prefix}"] = None
+    autosave_review(prefix, filename, model_key, number, query, original_qa)
+
+
+def reset_revised_json(prefix, filename, model_key, number, query, original_qa):
+    st.session_state[f"revjson-{prefix}"] = json.dumps(original_qa, indent=2, ensure_ascii=False)
+    st.session_state.pop(f"jsonerr-{prefix}", None)
+    autosave_review(prefix, filename, model_key, number, query, original_qa)
+
+
+def effective_qa_for_item(qa, existing):
+    """Return the active QA dict taking into account Retain / Revise / Discard."""
+    decision = existing.get("decision")
+    if decision == "Discard":
+        return None
+    if decision == "Revise" and isinstance(existing.get("revised_qa"), dict):
+        return existing["revised_qa"]
+    return qa
+
+
+def build_cleaned_jsonl(records, comments, model_key):
+    """Build JSONL text where Retain keeps original, Revise uses revised_qa, and Discard removes the QA."""
+    out_lines = []
+    for rec in records:
+        rec_copy = json.loads(json.dumps(rec))
+        fname = filename_of(rec_copy)
+        items = qa_items(rec_copy)
+        if items and fname:
+            new_items = []
+            for idx, qa in enumerate(items, start=1):
+                entry = saved_qa_entry(comments, fname, model_key, idx)
+                eff = effective_qa_for_item(qa, entry)
+                if eff is not None:
+                    new_items.append(eff)
+            if isinstance(rec_copy.get("qa"), dict):
+                rec_copy["qa"]["result"] = new_items
+            else:
+                rec_copy["qa"] = {"result": new_items}
+        out_lines.append(json.dumps(rec_copy, ensure_ascii=False))
+    return "\n".join(out_lines) + ("\n" if out_lines else "")
+
+
+def compute_annotation_stats(all_file_names, by_file_map, comments):
+    """Compute counts of Retain, Revise, Discard and per-question Pass(Yes), Fail(No), N/A."""
+    decision_counts = {"Retain": 0, "Revise": 0, "Discard": 0, "Unreviewed": 0}
+    criteria_counts = {
+        field: {"Pass": 0, "Fail": 0, "N/A": 0, "Unreviewed": 0}
+        for field, _, _ in CRITERIA
+    }
+    by_model_decisions = {
+        m_key: {"Retain": 0, "Revise": 0, "Discard": 0, "Unreviewed": 0, "Total": 0}
+        for m_key, _, _ in MODELS
+    }
+    by_model_criteria = {
+        m_key: {
+            field: {"Pass": 0, "Fail": 0, "N/A": 0, "Unreviewed": 0}
+            for field, _, _ in CRITERIA
+        }
+        for m_key, _, _ in MODELS
+    }
+
+    for name in all_file_names:
+        for m_key, _, _ in MODELS:
+            rec = pick_record(by_file_map[m_key].get(name, []))
+            items = qa_items(rec)
+            for idx in range(1, len(items) + 1):
+                by_model_decisions[m_key]["Total"] += 1
+                entry = saved_qa_entry(comments, name, m_key, idx)
+                dec = entry.get("decision")
+                if dec not in DECISIONS:
+                    dec = "Unreviewed"
+                decision_counts[dec] += 1
+                by_model_decisions[m_key][dec] += 1
+
+                crit_map = entry.get("criteria") if isinstance(entry.get("criteria"), dict) else {}
+                for field, _, _ in CRITERIA:
+                    val = crit_map.get(field)
+                    if val not in CRITERION_BUTTONS:
+                        val = "Unreviewed"
+                    criteria_counts[field][val] += 1
+                    by_model_criteria[m_key][field][val] += 1
+
+    return {
+        "decisions": decision_counts,
+        "criteria": criteria_counts,
+        "by_model_decisions": by_model_decisions,
+        "by_model_criteria": by_model_criteria,
+    }
+
+
+def render_qa_cards(items, filename, model_key, comments, review_filter="All reviews"):
+    if not items:
+        st.info("No Q&A parsed for this record.")
+        return
+    discarded_entries = []
+    visible_rendered = 0
+    for number, original_qa in enumerate(items, start=1):
+        if not isinstance(original_qa, dict):
+            continue
+        existing = saved_qa_entry(comments, filename, model_key, number)
+        saved_criteria = existing.get("criteria") if isinstance(existing.get("criteria"), dict) else {}
+        prefix = f"{filename}-{model_key}-{number}"
+
+        decision_key = f"decision-{prefix}"
+        saved_decision = existing.get("decision")
+        init_widget(decision_key, saved_decision if saved_decision in DECISIONS else None)
+        for field, _, _ in CRITERIA:
+            saved_value = saved_criteria.get(field)
+            init_widget(
+                f"crit-{prefix}-{field}",
+                saved_value if saved_value in CRITERION_BUTTONS else None,
+            )
+        current = st.session_state.get(decision_key) or "Unreviewed"
+
+        # Determine active QA object (original vs revised_qa)
+        saved_revised = existing.get("revised_qa")
+        active_qa = saved_revised if (current == "Revise" and isinstance(saved_revised, dict)) else original_qa
+
+        json_key = f"revjson-{prefix}"
+        if current == "Revise":
+            init_widget(
+                json_key,
+                json.dumps(
+                    saved_revised if isinstance(saved_revised, dict) else original_qa,
+                    indent=2,
+                    ensure_ascii=False,
+                ),
+            )
+            # Live preview from valid edited JSON in session state
+            try:
+                parsed_live = json.loads(st.session_state.get(json_key) or "")
+                if isinstance(parsed_live, dict):
+                    active_qa = parsed_live
+            except json.JSONDecodeError:
+                pass
+
+        query = str(active_qa.get("query", ""))
+        args = (prefix, filename, model_key, number, query, original_qa)
+
+        # If Discard is selected, disappear directly from the active list (unless filtering specifically by Discard)
+        if current == "Discard" and review_filter != "Discard":
+            discarded_entries.append((number, prefix, query, original_qa))
+            continue
+
+        visible_rendered += 1
+        answer = html.escape(str(active_qa.get("answer", "")))
+        category = html.escape(str(active_qa.get("category", "Unknown")))
+        answer_type = html.escape(str(active_qa.get("answer_type", "")))
+
+        with st.container(border=True):
+            st.markdown(
+                f"**Q{number}** <span class='qa-category'>{category}</span> {DECISION_BADGE[current]}",
+                unsafe_allow_html=True,
+            )
+            st.markdown(
+                f'<div class="qa-question">{html.escape(query)}</div>',
+                unsafe_allow_html=True,
+            )
+            if answer:
+                type_html = f'<span class="answer-type">{answer_type}</span>' if answer_type else ""
+                st.markdown(
+                    f'<div class="answer-label">ANSWER</div><span class="answer-box">{answer}</span>{type_html}',
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.caption("No answer in this object.")
+
+            st.segmented_control(
+                "Decision",
+                DECISIONS,
+                key=decision_key,
+                label_visibility="collapsed",
+                on_change=autosave_review,
+                args=args,
+                help="Retain keeps original QA. Revise lets you edit the QA JSON. Discard removes it immediately.",
+            )
+
+            st.button(
+                "✓ Mark all criteria Pass",
+                key=f"allpass-{prefix}",
+                on_click=set_all_pass,
+                args=args,
+            )
+            for field, label, help_text in CRITERIA:
+                label_col, control_col = st.columns([2, 3], vertical_alignment="center")
+                label_col.markdown(f"<span style='font-size:13px'>{label}</span>", unsafe_allow_html=True, help=help_text)
+                with control_col:
+                    st.segmented_control(
+                        label,
+                        CRITERION_BUTTONS,
+                        key=f"crit-{prefix}-{field}",
+                        label_visibility="collapsed",
+                        on_change=autosave_review,
+                        args=args,
+                    )
+
+            prev_comment = str(existing.get("comment") or "").strip()
+            if prev_comment:
+                st.caption(f"💬 **Saved comment:** {prev_comment}")
+
+            if current == "Revise":
+                st.markdown('<div class="answer-label" style="margin-top:8px;">✏️ EDIT QA JSON (REVISE)</div>', unsafe_allow_html=True)
+                st.text_area(
+                    "Edit QA JSON",
+                    height=200,
+                    key=json_key,
+                    label_visibility="collapsed",
+                    on_change=autosave_review,
+                    args=args,
+                )
+                if st.session_state.get(f"jsonerr-{prefix}"):
+                    st.error(st.session_state[f"jsonerr-{prefix}"])
+                st.button(
+                    "↺ Reset JSON to original",
+                    key=f"resetjson-{prefix}",
+                    on_click=reset_revised_json,
+                    args=args,
+                )
+
+            stamp = st.session_state.get(f"saved-{prefix}") or existing.get("updated_at")
+            if stamp:
+                st.caption(f"✓ Saved {str(stamp)[:19].replace('T', ' ')}")
+
+    if visible_rendered == 0 and discarded_entries:
+        st.caption("All questions in this section have been discarded.")
+
+    if discarded_entries:
+        with st.expander(f"🗑️ Discarded questions ({len(discarded_entries)}) — click to restore", expanded=False):
+            for num, pref, q_text, orig_qa in discarded_entries:
+                c_text, c_btn = st.columns([4, 1], vertical_alignment="center")
+                c_text.caption(f"**Q{num}:** {q_text}")
+                c_btn.button(
+                    "Restore",
+                    key=f"restore-{pref}",
+                    on_click=undo_discard,
+                    args=(pref, filename, model_key, num, q_text, orig_qa),
+                )
+
+
+def render_source_image(image_path, record, zoom_level=100):
+    if image_path and image_path.exists():
+        if image_path.suffix.lower() == ".pdf":
+            st.caption(f"📄 PDF Document: {image_path.name}")
+            st.download_button(
+                "Download PDF",
+                data=image_path.read_bytes(),
+                file_name=image_path.name,
+                mime="application/pdf",
+                key=f"pdf-{image_path.name}",
+                use_container_width=True,
+            )
+        elif zoom_level == 100:
+            st.image(str(image_path), use_container_width=True)
+        else:
+            st.image(str(image_path), width=int(zoom_level * 8))
+        return
+    st.error(f"Source image not found under {IMAGE_ROOT.name}.")
+    if record:
+        st.code(str(record.get("source_path") or record.get("file") or ""))
+
+
+def render_model_section(title, banner_class, record, attempts, filename, model_key, comments, reviewed, total, review_filter="All reviews"):
+    st.markdown(
+        f'<div class="model-banner {banner_class}"><span>{html.escape(title)}</span>'
+        f"<span>{reviewed} / {total} reviewed</span></div>",
+        unsafe_allow_html=True,
+    )
+    if not record:
+        st.warning("No record for this model.")
+        return
+    st.caption(
+        f"Attempts: {len(attempts) if attempts else 1} · Status: {status_label(record)} · Questions: {len(qa_items(record))}"
+    )
+    if record.get("error"):
+        st.error(record["error"])
+    render_qa_cards(qa_items(record), filename, model_key, comments, review_filter=review_filter)
+    with st.expander(f"🔍 {title} raw JSON", expanded=False):
+        st.json(record)
+
+
+def render_raw_json_inspector(records, filename, comments):
+    st.caption(f"JSON outputs for `{filename}` (Cleaned: Retain = original, Revise = edited JSON, Discard = removed)")
+    tabs = st.tabs([title for _, title, _ in MODELS])
+    for tab, (model_key, title, _) in zip(tabs, MODELS):
+        with tab:
+            record = records.get(model_key)
+            if record:
+                cleaned_record = json.loads(json.dumps(record))
+                items = qa_items(cleaned_record)
+                if items:
+                    new_items = []
+                    for idx, qa in enumerate(items, start=1):
+                        entry = saved_qa_entry(comments, filename, model_key, idx)
+                        eff = effective_qa_for_item(qa, entry)
+                        if eff is not None:
+                            new_items.append(eff)
+                    if isinstance(cleaned_record.get("qa"), dict):
+                        cleaned_record["qa"]["result"] = new_items
+                    else:
+                        cleaned_record["qa"] = {"result": new_items}
+
+                c_dl1, c_dl2 = st.columns(2)
+                with c_dl1:
+                    st.download_button(
+                        f"Download {title} Cleaned JSON",
+                        data=json.dumps(cleaned_record, indent=2, ensure_ascii=False),
+                        file_name=f"{model_key}_{filename}_cleaned.json",
+                        mime="application/json",
+                        key=f"dl-clean-{model_key}-{filename}",
+                        use_container_width=True,
+                    )
+                with c_dl2:
+                    st.download_button(
+                        f"Download {title} Original JSON",
+                        data=json.dumps(record, indent=2, ensure_ascii=False),
+                        file_name=f"{model_key}_{filename}_original.json",
+                        mime="application/json",
+                        key=f"dl-orig-{model_key}-{filename}",
+                        use_container_width=True,
+                    )
+                st.markdown("**Cleaned Record (after Retain / Revise / Discard):**")
+                st.json(cleaned_record)
+                with st.expander("Original Unmodified Record"):
+                    st.json(record)
+            else:
+                st.info(f"No {title} record for this file.")
+
+
+def reviewed_count(comments, name, model_key, record):
+    entries = file_review_bucket(comments.get(name, {})).get(model_key, {})
+    if not isinstance(entries, dict):
+        return 0
+    return sum(
+        1
+        for number in range(1, len(qa_items(record)) + 1)
+        if isinstance(entries.get(str(number)), dict)
+        and entries[str(number)].get("decision") in DECISIONS
+    )
+
+
+# Source selection (BI / OJK)
+with st.sidebar:
+    source_name = st.radio("Data Source", list(SOURCES), horizontal=True, key="source")
+if st.session_state.get("_last_source") != source_name:
+    st.session_state["_last_source"] = source_name
+    st.session_state.record_index = 0
+    st.session_state.pop("_active_filename", None)
+_source = SOURCES[source_name]
+INTERNVL_JSONL = DATA_DIR / _source["internvl"]
+QWEN_JSONL = DATA_DIR / _source["qwen"]
+GEMMA_JSONL = DATA_DIR / _source["gemma"]
+IMAGE_ROOT = next(
+    (DATA_ROOT / name for name in _source["images"] if (DATA_ROOT / name).exists()),
+    DATA_ROOT / _source["images"][0],
+)
+CLUSTER_PREFIX = f"{CLUSTER_ROOT}/{_source['images'][0]}"
+
+# Data loading
+records_by_model = {
+    "internvl": load_jsonl(str(INTERNVL_JSONL)),
+    "qwen": load_jsonl(str(QWEN_JSONL)),
+    "gemma": load_jsonl(str(GEMMA_JSONL)),
+}
+image_index = index_images(str(IMAGE_ROOT))
+
+if not any(records_by_model.values()):
+    st.error("None of the JSONL files (InternVL, Qwen, Gemma) could be loaded.")
+    st.stop()
+
+by_file = {key: group_by_file(recs) for key, recs in records_by_model.items()}
+all_files = sorted(set().union(*[set(d) for d in by_file.values()]))
+
+if "record_index" not in st.session_state:
+    st.session_state.record_index = 0
+
+progress_slot = st.sidebar.container()
+
+with st.sidebar:
+    st.header("Find & Filter")
+    search = st.text_input("Search filename", placeholder="e.g. p013")
+    review_filter = st.selectbox(
+        "Review status",
+        ["All reviews", "Unreviewed", "Retain", "Revise", "Discard"],
+    )
+    view_filter = st.selectbox(
+        "Models present",
+        [
+            "All files",
+            "In all 3 models",
+            "InternVL only",
+            "Qwen only",
+            "Gemma only",
+            "Has errors",
+            "Missing image",
+        ],
+    )
+
+    with st.expander("Display settings"):
+        layout_split = st.selectbox(
+            "Pane layout",
+            [
+                "55 / 45 (Image + Q&A)",
+                "50 / 50 (Balanced)",
+                "60 / 40 (Larger image)",
+                "Stacked (Image top)",
+            ],
+            index=0,
+        )
+        sticky_image = st.checkbox(
+            "Keep image in view while scrolling Q&A",
+            value=True,
+        )
+        image_zoom = st.slider(
+            "Image zoom",
+            min_value=60,
+            max_value=160,
+            value=100,
+            step=10,
+            format="%d%%",
+            help="100% fits the panel width. Zoom in to read small table cells; the image panel scrolls.",
+        )
+
+    with st.expander("Verification criteria"):
+        st.markdown(
+            """
+1. **Query Clarity:** specific and unambiguous, targeting a particular topic.
+2. **Answer Correctness:** factually correct and supported by the image. No hallucinations.
+3. **Category Appropriateness:** the question matches its assigned category.
+4. **Multi-Page Sources:** all referenced page sources are identified. Use N/A for single-page.
+
+**Decision rule:** Retain if all criteria are met. Revise for minor issues. Discard for major errors.
+            """
+        )
+
+# Pin the image panel (and let it scroll on its own) next to the scrolling Q&A
+if not layout_split.startswith("Stacked"):
+    sticky_css = (
+        "position: sticky; top: 3.4rem; align-self: flex-start;" if sticky_image else ""
+    )
+    st.markdown(
+        f"""
+        <style>
+        div[data-testid="stColumn"]:has(.st-key-image-pane) {{ align-self: stretch !important; }}
+        div[data-testid="stLayoutWrapper"]:has(> .st-key-image-pane) {{
+            {sticky_css}
+            width: 100%;
+        }}
+        .st-key-image-pane {{
+            max-height: calc(100vh - 4.6rem);
+            overflow: auto;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+comments_index = load_comments()
+file_stats = {}
+filtered = []
+active_pinned_file = st.session_state.get("_active_filename")
+
+for name in all_files:
+    picked = {key: pick_record(by_file[key].get(name, [])) for key, _, _ in MODELS}
+    reviewed = sum(reviewed_count(comments_index, name, key, picked[key]) for key, _, _ in MODELS)
+    total = sum(len(qa_items(picked[key])) for key, _, _ in MODELS)
+    file_stats[name] = (reviewed, total)
+
+    present = {key for key, rec in picked.items() if rec}
+    if view_filter == "In all 3 models" and len(present) < 3:
+        continue
+    if view_filter == "InternVL only" and present != {"internvl"}:
+        continue
+    if view_filter == "Qwen only" and present != {"qwen"}:
+        continue
+    if view_filter == "Gemma only" and present != {"gemma"}:
+        continue
+    if view_filter == "Has errors" and not any(status_label(rec) == "error" for rec in picked.values() if rec):
+        continue
+    if view_filter == "Missing image" and any(
+        resolve_image(rec, image_index) for rec in picked.values() if rec
+    ):
+        continue
+    if search and search.lower() not in name.lower():
+        continue
+
+    # Never drop the currently viewed page out of filtered just because the user finished reviewing a question on it;
+    # pages only change when the user explicitly clicks Prev / Next / Next unreviewed / Jump.
+    if name != active_pinned_file:
+        if review_filter == "Unreviewed":
+            if total > 0 and reviewed >= total:
+                continue
+        elif review_filter != "All reviews":
+            file_reviews = file_review_bucket(comments_index.get(name, {}))
+            decisions = [
+                entry.get("decision")
+                for model_entry in file_reviews.values()
+                if isinstance(model_entry, dict)
+                for entry in model_entry.values()
+                if isinstance(entry, dict)
+            ]
+            if review_filter not in decisions:
+                continue
+    filtered.append(name)
+
+# Keep the user pinned on the exact same filename unless they explicitly navigated
+if active_pinned_file and active_pinned_file in filtered:
+    st.session_state.record_index = filtered.index(active_pinned_file)
+
+grand_reviewed = sum(r for r, _ in file_stats.values())
+grand_total = sum(t for _, t in file_stats.values())
+annot_stats = compute_annotation_stats(all_files, by_file, comments_index)
+dec_totals = annot_stats["decisions"]
+crit_totals = annot_stats["criteria"]
+
+with progress_slot:
+    st.markdown(f"**{source_name} review progress**")
+    st.progress(grand_reviewed / grand_total if grand_total else 0.0)
+    st.caption(f"{grand_reviewed} / {grand_total} questions reviewed")
+    st.markdown(
+        f"🟢 **Retain:** `{dec_totals['Retain']}` &nbsp;|&nbsp; "
+        f"🟠 **Revise:** `{dec_totals['Revise']}` &nbsp;|&nbsp; "
+        f"🔴 **Discard:** `{dec_totals['Discard']}`"
+    )
+    with st.expander("📊 Annotation Counts & Export", expanded=False):
+        st.markdown("**Decisions by Model**")
+        for m_key, m_title, _ in MODELS:
+            md = annot_stats["by_model_decisions"][m_key]
+            st.caption(
+                f"**{m_title}** ({md['Total']}): "
+                f"Retain `{md['Retain']}` · Revise `{md['Revise']}` · Discard `{md['Discard']}` · Unrev `{md['Unreviewed']}`"
+            )
+        st.divider()
+        st.markdown("**Criteria Counts (Yes=Pass / No=Fail / N/A)**")
+        for field, label, _ in CRITERIA:
+            c = crit_totals[field]
+            st.caption(
+                f"**{label}**: Yes `{c['Pass']}` · No `{c['Fail']}` · N/A `{c['N/A']}`"
+            )
+        st.divider()
+        st.markdown("**Export Cleaned JSONL**")
+        for m_key, m_title, _ in MODELS:
+            if not records_by_model[m_key]:
+                continue
+            cleaned_jsonl_str = build_cleaned_jsonl(records_by_model[m_key], comments_index, m_key)
+            src_filename = _source[m_key]
+            clean_filename = src_filename.replace(".jsonl", "_cleaned.jsonl")
+            st.download_button(
+                f"⬇️ {m_title} ({clean_filename})",
+                data=cleaned_jsonl_str,
+                file_name=clean_filename,
+                mime="application/jsonl",
+                key=f"dl-cleaned-jsonl-{source_name}-{m_key}",
+                use_container_width=True,
+            )
+        if st.button("💾 Save cleaned JSONLs to json/ folder", key=f"save-clean-disk-{source_name}", use_container_width=True):
+            saved_files = []
+            for m_key, m_title, _ in MODELS:
+                if not records_by_model[m_key]:
+                    continue
+                src_filename = _source[m_key]
+                clean_path = DATA_DIR / src_filename.replace(".jsonl", "_cleaned.jsonl")
+                cleaned_jsonl_str = build_cleaned_jsonl(records_by_model[m_key], comments_index, m_key)
+                clean_path.write_text(cleaned_jsonl_str, encoding="utf-8")
+                saved_files.append(clean_path.name)
+            if saved_files:
+                st.success(f"Saved: {', '.join(saved_files)}")
+
+if not filtered:
+    st.warning("No records match the current filters.")
+    st.stop()
+
+st.session_state.record_index = max(
+    0, min(st.session_state.record_index, len(filtered) - 1)
+)
+
+
+def previous_record():
+    if st.session_state.record_index > 0:
+        st.session_state.record_index -= 1
+        st.session_state["_active_filename"] = filtered[st.session_state.record_index]
+        st.session_state["jump_record_input"] = st.session_state.record_index + 1
+
+
+def next_record():
+    if st.session_state.record_index < len(filtered) - 1:
+        st.session_state.record_index += 1
+        st.session_state["_active_filename"] = filtered[st.session_state.record_index]
+        st.session_state["jump_record_input"] = st.session_state.record_index + 1
+
+
+def next_unreviewed():
+    for position in range(st.session_state.record_index + 1, len(filtered)):
+        reviewed, total = file_stats[filtered[position]]
+        if reviewed < total:
+            st.session_state.record_index = position
+            st.session_state["_active_filename"] = filtered[position]
+            st.session_state["jump_record_input"] = position + 1
+            return
+    st.toast("No unreviewed files after this one.")
+
+
+def on_jump_change():
+    target = int(st.session_state.get("jump_record_input", 1)) - 1
+    if 0 <= target < len(filtered):
+        st.session_state.record_index = target
+        st.session_state["_active_filename"] = filtered[target]
+
+
+index = st.session_state.record_index
+filename = filtered[index]
+st.session_state["_active_filename"] = filename
+st.session_state["jump_record_input"] = index + 1
+
+attempts = {key: by_file[key].get(filename, []) for key, _, _ in MODELS}
+picked = {key: pick_record(attempts[key]) for key, _, _ in MODELS}
+image_path = next(
+    (path for path in (resolve_image(rec, image_index) for rec in picked.values() if rec) if path),
+    None,
+)
+file_reviewed, file_total = file_stats[filename]
+
+with st.sidebar:
+    st.divider()
+    st.number_input(
+        f"Jump to record (1–{len(filtered)})",
+        min_value=1,
+        max_value=len(filtered),
+        step=1,
+        key="jump_record_input",
+        on_change=on_jump_change,
+    )
+    with st.expander("Data paths"):
+        for key, title, _ in MODELS:
+            st.caption(f"{title} JSONL")
+            st.code(str({"internvl": INTERNVL_JSONL, "qwen": QWEN_JSONL, "gemma": GEMMA_JSONL}[key]))
+        st.caption("Images root")
+        st.code(str(IMAGE_ROOT))
+        st.caption("Reviews stored in")
+        st.code("Supabase" if supabase_config() else str(COMMENTS_PATH))
+
+# Toolbar
+bar_title, bar_prev, bar_next, bar_unrev = st.columns([5, 1, 1, 1.4], vertical_alignment="center")
+with bar_title:
+    st.markdown(
+        f"""
+        <div class="main-title">{html.escape(source_name)} · Record {index + 1} of {len(filtered)}
+            &nbsp;<span style="font-size:13px;color:#6b7280;font-weight:600;">· {file_reviewed}/{file_total} reviewed</span></div>
+        <div class="main-subtitle">📄 {html.escape(filename)}</div>
+        """,
+        unsafe_allow_html=True,
+    )
+with bar_prev:
+    st.button("← Prev", key="top_prev", on_click=previous_record, disabled=index == 0, use_container_width=True)
+with bar_next:
+    st.button("Next →", key="top_next", on_click=next_record, disabled=index >= len(filtered) - 1, use_container_width=True)
+with bar_unrev:
+    st.button("Next unreviewed ⏭", key="top_unrev", on_click=next_unreviewed, use_container_width=True)
+
+if st.session_state.get("_save_error"):
+    st.error(st.session_state["_save_error"])
+
+# Image | Q&A
+if layout_split.startswith("55"):
+    left_pane, right_pane = st.columns([55, 45], gap="medium")
+elif layout_split.startswith("50"):
+    left_pane, right_pane = st.columns([1, 1], gap="medium")
+elif layout_split.startswith("60"):
+    left_pane, right_pane = st.columns([60, 40], gap="medium")
+else:
+    left_pane = st.container()
+    right_pane = st.container()
+
+with left_pane:
+    with st.container(key="image-pane"):
+        st.markdown(
+            f"""
+            <div class="image-panel-header">
+                <span>🖼️ Source document</span>
+                <span style="font-size:12px; font-weight:600; color:{'#16a34a' if image_path else '#dc2626'};">
+                    {'● Image found' if image_path else '○ Image missing'}
+                </span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        render_source_image(
+            image_path,
+            next((rec for rec in picked.values() if rec), None),
+            zoom_level=image_zoom,
+        )
+
+VIEW_OPTIONS = [title for _, title, _ in MODELS] + ["Compare all", "Raw JSON", "📊 Stats"]
+with right_pane:
+    default_view = next(
+        (title for key, title, _ in MODELS if picked[key]),
+        VIEW_OPTIONS[0],
+    )
+    view_mode = st.segmented_control(
+        "View",
+        VIEW_OPTIONS,
+        default=default_view,
+        key="view_mode",
+        label_visibility="collapsed",
+    ) or default_view
+
+    comments = load_comments()
+
+    def section(model_key, title, banner):
+        record = picked[model_key]
+        render_model_section(
+            title,
+            banner,
+            record,
+            attempts[model_key],
+            filename,
+            model_key,
+            comments,
+            reviewed_count(comments, filename, model_key, record),
+            len(qa_items(record)),
+            review_filter=review_filter,
+        )
+
+    if view_mode == "Compare all":
+        for column, (model_key, title, banner) in zip(st.columns(3, gap="small"), MODELS):
+            with column:
+                section(model_key, title, banner)
+    elif view_mode == "Raw JSON":
+        render_raw_json_inspector(picked, filename, comments)
+    elif view_mode == "📊 Stats":
+        live_stats = compute_annotation_stats(all_files, by_file, comments)
+        st.subheader(f"📊 {source_name} Single-Page Annotation Summary")
+        d = live_stats["decisions"]
+        m1, m2, m3, m4 = st.columns(4)
+        m1.metric("🟢 Retain", d["Retain"])
+        m2.metric("🟠 Revise", d["Revise"])
+        m3.metric("🔴 Discard", d["Discard"])
+        m4.metric("⚪ Unreviewed", d["Unreviewed"])
+
+        st.markdown("#### Decisions per Model")
+        decision_rows = []
+        for m_key, m_title, _ in MODELS:
+            md = live_stats["by_model_decisions"][m_key]
+            decision_rows.append({
+                "Model": m_title,
+                "Retain": md["Retain"],
+                "Revise": md["Revise"],
+                "Discard": md["Discard"],
+                "Unreviewed": md["Unreviewed"],
+                "Active (Retain + Revise)": md["Retain"] + md["Revise"],
+                "Original Total": md["Total"],
+            })
+        st.dataframe(decision_rows, use_container_width=True, hide_index=True)
+
+        st.markdown("#### Per-Question Criteria Annotation Counts (Yes=Pass / No=Fail / N/A)")
+        crit_rows = []
+        for field, label, _ in CRITERIA:
+            c = live_stats["criteria"][field]
+            crit_rows.append({
+                "Criterion": label,
+                "Yes (Pass)": c["Pass"],
+                "No (Fail)": c["Fail"],
+                "N/A": c["N/A"],
+                "Unreviewed": c["Unreviewed"],
+            })
+        st.dataframe(crit_rows, use_container_width=True, hide_index=True)
+
+        for m_key, m_title, _ in MODELS:
+            with st.expander(f"Criteria Breakdown — {m_title}", expanded=False):
+                m_crit_rows = []
+                for field, label, _ in CRITERIA:
+                    mc = live_stats["by_model_criteria"][m_key][field]
+                    m_crit_rows.append({
+                        "Criterion": label,
+                        "Yes (Pass)": mc["Pass"],
+                        "No (Fail)": mc["Fail"],
+                        "N/A": mc["N/A"],
+                        "Unreviewed": mc["Unreviewed"],
+                    })
+                st.dataframe(m_crit_rows, use_container_width=True, hide_index=True)
+    else:
+        model_key, title, banner = next(m for m in MODELS if m[1] == view_mode)
+        section(model_key, title, banner)
+
+# Bottom navigation
+st.divider()
+bottom_left, bottom_center, bottom_unrev, bottom_right = st.columns([1, 2, 1.4, 1])
+with bottom_left:
+    st.button("← Previous", key="bottom_prev", on_click=previous_record, disabled=index == 0, use_container_width=True)
+with bottom_center:
+    st.markdown(
+        f'<div class="record-counter">Record <b>{index + 1}</b> of <b>{len(filtered)}</b></div>',
+        unsafe_allow_html=True,
+    )
+with bottom_unrev:
+    st.button("Next unreviewed ⏭", key="bottom_unrev", on_click=next_unreviewed, use_container_width=True)
+with bottom_right:
+    st.button("Next →", key="bottom_next", on_click=next_record, disabled=index >= len(filtered) - 1, use_container_width=True)
